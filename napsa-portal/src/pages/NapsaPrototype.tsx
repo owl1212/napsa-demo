@@ -17,23 +17,40 @@ import ContributionsView from './napsa/components/ContributionsView';
 import KYCView from './napsa/components/KYCView';
 import EmployerAccountsView from './napsa/components/EmployerAccountsView';
 import AuditTrailView from './napsa/components/AuditTrailView';
+import RealEstateView from './napsa/components/RealEstateView';
+import ActuarialView from './napsa/components/ActuarialView';
 
 const NapsaPrototype: React.FC = () => {
   const { user } = useAuth();
-  const isAdmin = user?.role === 'ADMIN';
   
   // Set default view based on role
-  const defaultView = isAdmin ? 'admin_dashboard' : 'dashboard';
+  const getDefaultView = (role: string | null) => {
+    switch (role) {
+      case 'ADMIN': return 'admin_dashboard';
+      case 'REAL_ESTATE': return 'real_estate';
+      case 'ACTUARIAL': return 'actuarial';
+      case 'FINANCE': return 'accounting';
+      case 'INVESTMENT': return 'fund_mgmt';
+      case 'OPERATIONS': return 'contribution_mgmt';
+      case 'MEMBER_SERVICES': return 'web_portal';
+      default: return 'dashboard';
+    }
+  };
+  
+  const defaultView = getDefaultView(user?.role || null);
   const [view, setView] = useState(defaultView);
 
   // Reset to default view when role changes
   useEffect(() => {
-    setView(defaultView);
+    setView(getDefaultView(user?.role || null));
   }, [user?.role]);
 
+  // Determine sidebar type based on role
+  const adminRoles = ['ADMIN', 'REAL_ESTATE', 'ACTUARIAL', 'FINANCE', 'INVESTMENT', 'OPERATIONS', 'MEMBER_SERVICES'];
+  const isAdmin = user && adminRoles.includes(user.role || '');
+
   const renderView = () => {
-    // Admin views
-    if (isAdmin) {
+    if (user && adminRoles.includes(user.role || '')) {
       switch (view) {
         case 'admin_dashboard': return <AdminDashboardView />;
         case 'accounting': return <AccountingView />;
@@ -44,6 +61,8 @@ const NapsaPrototype: React.FC = () => {
         case 'web_portal': return <WebPortalView />;
         case 'employer_accounts': return <EmployerAccountsView />;
         case 'audit_trail': return <AuditTrailView />;
+        case 'real_estate': return <RealEstateView />;
+        case 'actuarial': return <ActuarialView />;
         default: return <AdminDashboardView />;
       }
     }
@@ -62,7 +81,7 @@ const NapsaPrototype: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-bg-gray text-text-dark">
       {isAdmin ? (
-        <AdminSidebar currentView={view} setView={setView} />
+        <AdminSidebar currentView={view} setView={setView} userRole={user?.role} />
       ) : (
         <EmployeeSidebar currentView={view} setView={setView} />
       )}

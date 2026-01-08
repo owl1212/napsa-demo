@@ -1,11 +1,51 @@
 import React from 'react';
+import { UserRole } from '../../../contexts/AuthContext';
 
 interface AdminSidebarProps {
   currentView: string;
   setView: (view: string) => void;
+  userRole?: UserRole;
 }
 
-const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView }) => {
+const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userRole }) => {
+  // Define role-specific menu items
+  const getMenuItems = (role?: UserRole) => {
+    const allItems = [
+      { id: 'admin_dashboard', label: 'Dashboard', icon: 'fa-table-columns', section: 'MAIN' },
+      { id: 'accounting', label: 'Accounting', icon: 'fa-calculator', section: 'OPERATIONS' },
+      { id: 'fund_mgmt', label: 'Fund Management', icon: 'fa-chart-pie', section: 'OPERATIONS' },
+      { id: 'pension_payroll', label: 'Pension Payroll', icon: 'fa-money-check-dollar', section: 'OPERATIONS' },
+      { id: 'member_admin', label: 'Member Admin', icon: 'fa-users-gear', section: 'OPERATIONS' },
+      { id: 'contribution_mgmt', label: 'Contribution Mgmt', icon: 'fa-hand-holding-dollar', section: 'OPERATIONS' },
+      { id: 'real_estate', label: 'Real Estate', icon: 'fa-building', section: 'OPERATIONS' },
+      { id: 'actuarial', label: 'Actuarial & Sustainability', icon: 'fa-chart-line', section: 'ANALYTICS' },
+      { id: 'employer_accounts', label: 'Employer Accounts', icon: 'fa-briefcase', section: 'ANALYTICS' },
+      { id: 'web_portal', label: 'Web Portal Services', icon: 'fa-globe', section: 'SYSTEM' },
+      { id: 'audit_trail', label: 'Audit Trail', icon: 'fa-clipboard-list', section: 'SYSTEM' },
+    ];
+
+    switch (role) {
+      case 'ADMIN':
+        return allItems; // Admin sees everything
+      case 'REAL_ESTATE':
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'real_estate');
+      case 'ACTUARIAL':
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'actuarial');
+      case 'FINANCE':
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'accounting');
+      case 'INVESTMENT':
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'fund_mgmt');
+      case 'OPERATIONS':
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'contribution_mgmt');
+      case 'MEMBER_SERVICES':
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'web_portal');
+      default:
+        return [allItems[0]]; // Default to dashboard only
+    }
+  };
+
+  const menuItems = getMenuItems(userRole);
+
   return (
     <div className="fixed left-0 top-0 w-64 h-full bg-primary-navy text-white flex flex-col overflow-y-auto z-50">
       <div className="p-4 flex items-center gap-3 border-b border-white/10">
@@ -18,50 +58,35 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView }) => 
       </div>
 
       <div className="flex-1 p-4">
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'admin_dashboard' ? 'bg-white/10' : ''}`} onClick={() => setView('admin_dashboard')}>
-          <i className="fa-solid fa-table-columns"></i>
-          <span>Dashboard</span>
-        </div>
-
-        <div className="text-xs uppercase text-white/70 font-semibold mb-2 mt-4">OPERATIONS</div>
-
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'accounting' ? 'bg-white/10' : ''}`} onClick={() => setView('accounting')}>
-          <i className="fa-solid fa-calculator"></i>
-          <span>Accounting</span>
-        </div>
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'fund_mgmt' ? 'bg-white/10' : ''}`} onClick={() => setView('fund_mgmt')}>
-          <i className="fa-solid fa-chart-pie"></i>
-          <span>Fund Management</span>
-        </div>
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'pension_payroll' ? 'bg-white/10' : ''}`} onClick={() => setView('pension_payroll')}>
-          <i className="fa-solid fa-money-check-dollar"></i>
-          <span>Pension Payroll</span>
-        </div>
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'member_admin' ? 'bg-white/10' : ''}`} onClick={() => setView('member_admin')}>
-          <i className="fa-solid fa-users-gear"></i>
-          <span>Member Admin</span>
-        </div>
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'contribution_mgmt' ? 'bg-white/10' : ''}`} onClick={() => setView('contribution_mgmt')}>
-          <i className="fa-solid fa-hand-holding-dollar"></i>
-          <span>Contribution Mgmt</span>
-        </div>
-
-        <div className="text-xs uppercase text-white/70 font-semibold mb-2 mt-4">EMPLOYER MANAGEMENT</div>
-
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'employer_accounts' ? 'bg-white/10' : ''}`} onClick={() => setView('employer_accounts')}>
-          <i className="fa-solid fa-briefcase"></i>
-          <span>Employer Accounts</span>
-        </div>
-
-        <div className="text-xs uppercase text-white/70 font-semibold mb-2 mt-4">SYSTEM</div>
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'web_portal' ? 'bg-white/10' : ''}`} onClick={() => setView('web_portal')}>
-          <i className="fa-solid fa-globe"></i>
-          <span>Web Portal Services</span>
-        </div>
-        <div className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${currentView === 'audit_trail' ? 'bg-white/10' : ''}`} onClick={() => setView('audit_trail')}>
-          <i className="fa-solid fa-clipboard-list"></i>
-          <span>Audit Trail</span>
-        </div>
+        {(() => {
+          const sections = ['MAIN', 'OPERATIONS', 'ANALYTICS', 'SYSTEM'];
+          return sections.map(section => {
+            const sectionItems = menuItems.filter(item => item.section === section);
+            if (sectionItems.length === 0) return null;
+            
+            return (
+              <React.Fragment key={section}>
+                {section !== 'MAIN' && (
+                  <div className="text-xs uppercase text-white/70 font-semibold mb-2 mt-4">
+                    {section}
+                  </div>
+                )}
+                {sectionItems.map(item => (
+                  <div
+                    key={item.id}
+                    className={`p-3 mb-2 rounded cursor-pointer flex items-center gap-3 ${
+                      currentView === item.id ? 'bg-white/10' : ''
+                    }`}
+                    onClick={() => setView(item.id)}
+                  >
+                    <i className={`fa-solid ${item.icon}`}></i>
+                    <span>{item.label}</span>
+                  </div>
+                ))}
+              </React.Fragment>
+            );
+          });
+        })()}
       </div>
 
       <div className="p-4">

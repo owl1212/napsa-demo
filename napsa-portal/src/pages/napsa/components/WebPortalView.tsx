@@ -5,6 +5,168 @@ const WebPortalView = () => {
 
       <h1 className="text-2xl font-bold text-text-dark mb-8">Web Portal Services</h1>
 
+      {/* Portal Engagement */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 className="text-sm font-semibold text-text-gray mb-4">Daily Active Users (DAU)</h3>
+          <div className="text-3xl font-bold text-text-dark mb-2">1,247</div>
+          <div className="text-sm text-text-gray mb-2">Currently online</div>
+          <div className="flex items-center text-sm">
+            <span className="text-green-600 font-medium">+12%</span>
+            <span className="text-text-gray ml-2">vs yesterday</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 className="text-sm font-semibold text-text-gray mb-4">Weekly Active Users (WAU)</h3>
+          <div className="text-3xl font-bold text-text-dark mb-2">8,934</div>
+          <div className="text-sm text-text-gray mb-2">Last 7 days</div>
+          <div className="flex items-center text-sm">
+            <span className="text-green-600 font-medium">+8%</span>
+            <span className="text-text-gray ml-2">vs last week</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 className="text-sm font-semibold text-text-gray mb-4">Peak Usage Times</h3>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span>Lunch hours (12-2 PM)</span>
+              <span className="font-medium">2,145 users</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span>Evening (5-7 PM)</span>
+              <span className="font-medium">1,892 users</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span>Business hours (9-5 PM)</span>
+              <span className="font-medium">Avg 1,450 users</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Most Used Features */}
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8">
+        <h3 className="text-sm font-semibold text-text-gray mb-4">Most Used Features</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-blue-600 mb-1">45.2%</div>
+            <div className="text-sm text-text-gray">Benefit Estimator</div>
+            <div className="text-xs text-green-600 mt-1">+5% from last month</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-green-600 mb-1">32.8%</div>
+            <div className="text-sm text-text-gray">Statement Download</div>
+            <div className="text-xs text-green-600 mt-1">+12% from last month</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-purple-600 mb-1">22.0%</div>
+            <div className="text-sm text-text-gray">Update Details</div>
+            <div className="text-xs text-yellow-600 mt-1">+2% from last month</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Service Request Management */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 className="text-sm font-semibold text-text-gray mb-4">Online Service Requests</h3>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Beneficiary Changes</span>
+              <div className="flex items-center gap-2">
+                <span className="font-medium">234</span>
+                <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Pending</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Document Uploads</span>
+              <div className="flex items-center gap-2">
+                <span className="font-medium">156</span>
+                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">In Review</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">General Inquiries</span>
+              <div className="flex items-center gap-2">
+                <span className="font-medium">89</span>
+                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Resolved</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 text-sm">
+            <span className="font-semibold">Total requests today: </span>
+            <span>479</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 className="text-sm font-semibold text-text-gray mb-4">Average Resolution Time</h3>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Beneficiary Changes</span>
+              <span className="font-medium">2.3 days</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Document Uploads</span>
+              <span className="font-medium">1.8 days</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">General Inquiries</span>
+              <span className="font-medium">0.5 days</span>
+            </div>
+          </div>
+          <div className="mt-4 p-3 bg-green-50 rounded-lg">
+            <div className="text-sm text-green-800">
+              <strong>SLA Compliance:</strong> 94% of requests resolved within target timeframes
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Communication Effectiveness */}
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8">
+        <h3 className="text-sm font-semibold text-text-gray mb-4">Communication Effectiveness</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <h4 className="text-sm font-medium mb-3">Statement Delivery Success</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Email delivery rate</span>
+                <span className="font-medium text-green-600">97.2%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Bounce rate</span>
+                <span className="font-medium text-red-600">2.8%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Open rate</span>
+                <span className="font-medium text-blue-600">68.5%</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium mb-3">System Load Planning</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Concurrent users capacity</span>
+                <span className="font-medium">5,000</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Current peak load</span>
+                <span className="font-medium text-yellow-600">2,145</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">System utilization</span>
+                <span className="font-medium text-green-600">43%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Service Status Overview */}
       <div className="grid grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">

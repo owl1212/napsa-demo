@@ -73,6 +73,228 @@ const FundMgmtView: React.FC = () => {
         Below is the summary of your fund position as at 2026-01-06
       </div>
 
+      {/* Asset Allocation Overview */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Asset Allocation</h3>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full bg-blue-500"></div>
+                <span className="text-sm">Equities</span>
+              </div>
+              <span className="font-medium">35.2%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full bg-green-500"></div>
+                <span className="text-sm">Bonds & Securities</span>
+              </div>
+              <span className="font-medium">28.7%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
+                <span className="text-sm">Property Investment</span>
+              </div>
+              <span className="font-medium">18.9%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full bg-purple-500"></div>
+                <span className="text-sm">Fixed Deposits</span>
+              </div>
+              <span className="font-medium">12.3%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full bg-red-500"></div>
+                <span className="text-sm">Other Investments</span>
+              </div>
+              <span className="font-medium">4.9%</span>
+            </div>
+          </div>
+          <div className="mt-6 h-[200px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-sm">
+            Interactive Pie Chart Visualization
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Attribution</h3>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Equities</span>
+              <span className="font-medium text-green-600">+4.2%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Bonds & Securities</span>
+              <span className="font-medium text-green-600">+2.8%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Property Investment</span>
+              <span className="font-medium text-green-600">+3.1%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Fixed Deposits</span>
+              <span className="font-medium text-yellow-600">+1.5%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">Other Investments</span>
+              <span className="font-medium text-red-600">-0.3%</span>
+            </div>
+          </div>
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+            <div className="text-sm text-blue-800">
+              <strong>Top Contributor:</strong> Equities (+4.2% to total return)
+              <br />
+              <strong>Portfolio Return:</strong> +12.4% YTD
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Individual Asset Class Drills */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Equity Portfolio</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-sm">Top 5 Holdings</span>
+              <span className="text-xs text-gray-500">by value</span>
+            </div>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span>Zambia Sugar</span>
+                <span className="font-medium">K 45.2M</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Zambia Breweries</span>
+                <span className="font-medium">K 38.7M</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Copperbelt Energy</span>
+                <span className="font-medium">K 32.1M</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Zambia National Comm.</span>
+                <span className="font-medium">K 28.9M</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Copperbelt Cement</span>
+                <span className="font-medium">K 25.4M</span>
+              </div>
+            </div>
+            <div className="pt-3 border-t">
+              <div className="flex justify-between text-sm">
+                <span>Portfolio P/E Ratio</span>
+                <span className="font-medium">14.2x</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span>Dividend Yield</span>
+                <span className="font-medium">3.8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Bonds & Treasury Bills</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-sm">Yield to Maturity (YTM)</span>
+              <span className="font-medium">9.4%</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm">Average Portfolio Duration</span>
+              <span className="font-medium">4.2 years</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm">Interest Receivable</span>
+              <span className="font-medium">K 2.1M</span>
+            </div>
+          </div>
+          <div className="mt-4 h-[120px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
+            YTM Curve Chart
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Real Estate Portfolio</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-sm">Occupancy Rate</span>
+              <span className="font-medium text-green-600">94.2%</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm">Rental Collection Rate</span>
+              <span className="font-medium text-green-600">97.1%</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm">Monthly Rental Income</span>
+              <span className="font-medium">K 2.8M</span>
+            </div>
+          </div>
+          <div className="mt-4 h-[120px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
+            Property Map View
+          </div>
+        </div>
+      </div>
+
+      {/* Compliance & Alerts */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Compliance & Alerts</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <h4 className="text-sm font-medium mb-3">Policy Limit Monitoring</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Equities (Target: 30-40%)</span>
+                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Within Range</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Bonds (Target: 25-35%)</span>
+                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Within Range</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Property (Target: 15-25%)</span>
+                <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Near Limit</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Cash/Fixed (Target: 10-20%)</span>
+                <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Below Minimum</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium mb-3">Upcoming Events & Alerts</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                <div>
+                  <div className="text-sm font-medium">Government Bond Auction</div>
+                  <div className="text-xs text-gray-600">Feb 15, 2026 - 5-year bonds</div>
+                </div>
+                <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">2 weeks</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                <div>
+                  <div className="text-sm font-medium">Zambia Sugar AGM</div>
+                  <div className="text-xs text-gray-600">Mar 22, 2026</div>
+                </div>
+                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">6 weeks</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                <div>
+                  <div className="text-sm font-medium">Bond Maturity</div>
+                  <div className="text-xs text-gray-600">Zambia Govt Bond 2026A - K 50M</div>
+                </div>
+                <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Critical</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Fund Position Tables */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-10">
         {/* Kwacha Funds Table */}

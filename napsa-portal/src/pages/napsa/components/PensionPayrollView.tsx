@@ -19,13 +19,6 @@ interface Pensioner {
   email?: string;
 }
 
-interface PayrollRun {
-  date: string;
-  totalPensioners: number;
-  totalAmount: number;
-  status: 'Pending' | 'In Progress' | 'Completed' | 'Failed';
-}
-
 // Mock Data
 const generateMockPensioners = (): Pensioner[] => {
   const firstNames = ['John', 'Mary', 'Joseph', 'Grace', 'Patrick', 'Lucy', 'Samuel', 'Joyce', 'David', 'Ruth', 'Michael', 'Sarah', 'Peter', 'Elizabeth', 'James', 'Margaret', 'Daniel', 'Catherine', 'Richard', 'Agnes'];

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type UserRole = 'ADMIN' | 'EMPLOYEE' | null;
+export type UserRole = 'ADMIN' | 'EMPLOYEE' | 'REAL_ESTATE' | 'ACTUARIAL' | 'FINANCE' | 'INVESTMENT' | 'OPERATIONS' | 'MEMBER_SERVICES' | null;
 
 interface User {
   email: string;
@@ -13,7 +13,7 @@ interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => boolean;
   logout: () => void;
-  switchRole: (role: 'ADMIN' | 'EMPLOYEE') => void;
+  switchRole: (role: NonNullable<UserRole>) => void;
   isAuthenticated: boolean;
 }
 
@@ -56,6 +56,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         ssn: '113292218',
       });
       return true;
+    } else if (email === 'realestate@napsa.com') {
+      setUser({
+        email: 'realestate@napsa.com',
+        role: 'REAL_ESTATE',
+        name: 'John Banda',
+      });
+      return true;
+    } else if (email === 'actuarial@napsa.com') {
+      setUser({
+        email: 'actuarial@napsa.com',
+        role: 'ACTUARIAL',
+        name: 'Dr. Mary Phiri',
+      });
+      return true;
+    } else if (email === 'finance@napsa.com') {
+      setUser({
+        email: 'finance@napsa.com',
+        role: 'FINANCE',
+        name: 'Sarah Zulu',
+      });
+      return true;
+    } else if (email === 'investment@napsa.com') {
+      setUser({
+        email: 'investment@napsa.com',
+        role: 'INVESTMENT',
+        name: 'David Tembo',
+      });
+      return true;
+    } else if (email === 'operations@napsa.com') {
+      setUser({
+        email: 'operations@napsa.com',
+        role: 'OPERATIONS',
+        name: 'Grace Mulenga',
+      });
+      return true;
+    } else if (email === 'memberservices@napsa.com') {
+      setUser({
+        email: 'memberservices@napsa.com',
+        role: 'MEMBER_SERVICES',
+        name: 'Peter Ng\'ombe',
+      });
+      return true;
     }
     return false;
   };
@@ -64,20 +106,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
-  const switchRole = (role: 'ADMIN' | 'EMPLOYEE') => {
-    if (role === 'ADMIN') {
-      setUser({
+  const switchRole = (role: UserRole) => {
+    const roleUsers: Record<NonNullable<UserRole>, User> = {
+      ADMIN: {
         email: 'admin@napsa.com',
         role: 'ADMIN',
         name: 'Admin User',
-      });
-    } else {
-      setUser({
+      },
+      EMPLOYEE: {
         email: 'employee@napsa.com',
         role: 'EMPLOYEE',
         name: 'Kebbie Hamalala',
         ssn: '113292218',
-      });
+      },
+      REAL_ESTATE: {
+        email: 'realestate@napsa.com',
+        role: 'REAL_ESTATE',
+        name: 'John Banda',
+      },
+      ACTUARIAL: {
+        email: 'actuarial@napsa.com',
+        role: 'ACTUARIAL',
+        name: 'Dr. Mary Phiri',
+      },
+      FINANCE: {
+        email: 'finance@napsa.com',
+        role: 'FINANCE',
+        name: 'Sarah Zulu',
+      },
+      INVESTMENT: {
+        email: 'investment@napsa.com',
+        role: 'INVESTMENT',
+        name: 'David Tembo',
+      },
+      OPERATIONS: {
+        email: 'operations@napsa.com',
+        role: 'OPERATIONS',
+        name: 'Grace Mulenga',
+      },
+      MEMBER_SERVICES: {
+        email: 'memberservices@napsa.com',
+        role: 'MEMBER_SERVICES',
+        name: 'Peter Ng\'ombe',
+      },
+    };
+
+    if (role && roleUsers[role]) {
+      setUser(roleUsers[role]);
     }
   };
 

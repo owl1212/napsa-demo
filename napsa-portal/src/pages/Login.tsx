@@ -44,11 +44,11 @@ const Login: React.FC = () => {
     if (success) {
       navigate('/');
     } else {
-      setError('Invalid credentials. Use admin@napsa.com or employee@napsa.com');
+      setError('Invalid credentials. Use one of the demo emails above or enter a valid email.');
     }
   };
 
-  const handleQuickLogin = (role: 'ADMIN' | 'EMPLOYEE') => {
+  const handleQuickLogin = (role: 'ADMIN' | 'EMPLOYEE' | 'REAL_ESTATE' | 'ACTUARIAL' | 'FINANCE' | 'INVESTMENT' | 'OPERATIONS' | 'MEMBER_SERVICES') => {
     switchRole(role);
     navigate('/');
   };
@@ -219,19 +219,18 @@ const Login: React.FC = () => {
           {/* Demo Quick Login */}
           <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #E5E7EB' }}>
             <p style={{ textAlign: 'center', fontSize: '11px', color: '#6B7280', marginBottom: '12px', fontWeight: 600 }}>
-              DEMO QUICK LOGIN
+              DEMO DASHBOARD LOGIN
             </p>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
               <button
                 onClick={() => handleQuickLogin('ADMIN')}
                 style={{
-                  flex: 1,
                   backgroundColor: '#8B5CF6',
                   color: 'white',
                   border: 'none',
                   padding: '8px 12px',
-                  borderRadius: '20px',
-                  fontSize: '11px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
                   fontWeight: 600,
                   cursor: 'pointer',
                   transition: 'background 0.2s'
@@ -239,19 +238,75 @@ const Login: React.FC = () => {
                 onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#7C3AED'}
                 onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#8B5CF6'}
               >
-                <i className="fa-solid fa-user-shield" style={{ marginRight: '4px' }}></i>
-                Admin
+                <i className="fa-solid fa-table-columns" style={{ marginRight: '4px' }}></i>
+                Executive
               </button>
               <button
-                onClick={() => handleQuickLogin('EMPLOYEE')}
+                onClick={() => handleQuickLogin('REAL_ESTATE')}
                 style={{
-                  flex: 1,
+                  backgroundColor: '#10B981',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#059669'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#10B981'}
+              >
+                <i className="fa-solid fa-building" style={{ marginRight: '4px' }}></i>
+                Real Estate
+              </button>
+              <button
+                onClick={() => handleQuickLogin('ACTUARIAL')}
+                style={{
+                  backgroundColor: '#F59E0B',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#D97706'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#F59E0B'}
+              >
+                <i className="fa-solid fa-chart-line" style={{ marginRight: '4px' }}></i>
+                Actuarial
+              </button>
+              <button
+                onClick={() => handleQuickLogin('FINANCE')}
+                style={{
+                  backgroundColor: '#EF4444',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#DC2626'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#EF4444'}
+              >
+                <i className="fa-solid fa-calculator" style={{ marginRight: '4px' }}></i>
+                Finance
+              </button>
+              <button
+                onClick={() => handleQuickLogin('INVESTMENT')}
+                style={{
                   backgroundColor: '#3B82F6',
                   color: 'white',
                   border: 'none',
                   padding: '8px 12px',
-                  borderRadius: '20px',
-                  fontSize: '11px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
                   fontWeight: 600,
                   cursor: 'pointer',
                   transition: 'background 0.2s'
@@ -259,8 +314,65 @@ const Login: React.FC = () => {
                 onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2563EB'}
                 onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3B82F6'}
               >
+                <i className="fa-solid fa-chart-pie" style={{ marginRight: '4px' }}></i>
+                Investment
+              </button>
+              <button
+                onClick={() => handleQuickLogin('OPERATIONS')}
+                style={{
+                  backgroundColor: '#8B5CF6',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#7C3AED'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#8B5CF6'}
+              >
+                <i className="fa-solid fa-hand-holding-dollar" style={{ marginRight: '4px' }}></i>
+                Operations
+              </button>
+              <button
+                onClick={() => handleQuickLogin('MEMBER_SERVICES')}
+                style={{
+                  backgroundColor: '#06B6D4',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#0891B2'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#06B6D4'}
+              >
+                <i className="fa-solid fa-globe" style={{ marginRight: '4px' }}></i>
+                Member Services
+              </button>
+              <button
+                onClick={() => handleQuickLogin('EMPLOYEE')}
+                style={{
+                  backgroundColor: '#6B7280',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#4B5563'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#6B7280'}
+              >
                 <i className="fa-solid fa-user" style={{ marginRight: '4px' }}></i>
-                Employee
+                Member Portal
               </button>
             </div>
           </div>
