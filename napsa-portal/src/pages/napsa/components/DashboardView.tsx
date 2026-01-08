@@ -3,9 +3,12 @@ import React from 'react';
 const DashboardView: React.FC = () => {
   return (
     <div className="p-6">
-      <div className="mb-6 text-sm text-text-gray">Dashboard</div>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-text-dark mb-2">My Dashboard</h1>
+        <p className="text-text-muted">Welcome to your pension account overview</p>
+      </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Member Summary Card */}
         <div className="bg-white rounded-md p-6 shadow-sm border">
           <div className="flex justify-between items-start mb-4">
@@ -64,38 +67,40 @@ const DashboardView: React.FC = () => {
           </div>
         </div>
 
-        {/* Employer Accounts Summary */}
+        {/* Quick Actions Card */}
         <div className="bg-white rounded-md p-6 shadow-sm border">
-          <h3 className="text-lg font-semibold mb-6">Employer Accounts Summary</h3>
+          <h3 className="text-lg font-semibold mb-6">Quick Actions</h3>
 
-          <div className="grid grid-cols-4 gap-4 mb-8">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold">0</h3>
-              <span className="text-sm text-text-gray">Total</span>
-            </div>
-            <div className="text-center">
-              <h3 className="text-2xl font-bold">0</h3>
-              <span className="text-sm text-text-gray">Active</span>
-            </div>
-            <div className="text-center">
-              <h3 className="text-2xl font-bold">0</h3>
-              <span className="text-sm text-text-gray">Suspended</span>
-            </div>
-            <div className="text-center">
-              <h3 className="text-2xl font-bold">0</h3>
-              <span className="text-sm text-text-gray">Ceased</span>
-            </div>
-          </div>
+          <div className="space-y-3">
+            <button className="w-full p-4 border-2 border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-left flex items-center gap-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <i className="fa-solid fa-layer-group text-blue-600 text-xl"></i>
+              </div>
+              <div>
+                <div className="font-semibold text-text-dark">View Contributions</div>
+                <div className="text-sm text-text-muted">Check your contribution history</div>
+              </div>
+            </button>
 
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 cursor-pointer text-accent-blue">
-              <i className="fa-regular fa-pen-to-square"></i>
-              <span>Register an Employer Account</span>
-            </div>
-            <div className="flex items-center gap-2 cursor-pointer text-accent-blue">
-              <i className="fa-solid fa-folder-plus"></i>
-              <span>Attach Existing Account</span>
-            </div>
+            <button className="w-full p-4 border-2 border-green-200 rounded-lg hover:bg-green-50 transition-colors text-left flex items-center gap-4">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <i className="fa-solid fa-wallet text-green-600 text-xl"></i>
+              </div>
+              <div>
+                <div className="font-semibold text-text-dark">Benefits</div>
+                <div className="text-sm text-text-muted">View and manage your claims</div>
+              </div>
+            </button>
+
+            <button className="w-full p-4 border-2 border-purple-200 rounded-lg hover:bg-purple-50 transition-colors text-left flex items-center gap-4">
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <i className="fa-solid fa-user-gear text-purple-600 text-xl"></i>
+              </div>
+              <div>
+                <div className="font-semibold text-text-dark">Manage Account</div>
+                <div className="text-sm text-text-muted">Update your KYC information</div>
+              </div>
+            </button>
           </div>
         </div>
       </div>
