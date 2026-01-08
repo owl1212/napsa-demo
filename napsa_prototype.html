@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAPSA iCare Prototype</title>
+    <title>NAPSA Prototype</title>
 
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -610,7 +610,46 @@
                             <span>Dashboard</span>
                         </div>
 
-                        <div className="menu-category">ACCOUNTS</div>
+                        <div className="menu-category">OPERATIONS</div>
+
+                        <div
+                            className={`menu-item ${currentView === 'accounting' ? 'active-dash' : ''}`}
+                            onClick={() => setView('accounting')}
+                        >
+                            <i className="fa-solid fa-calculator"></i>
+                            <span>Accounting</span>
+                        </div>
+                        <div
+                            className={`menu-item ${currentView === 'fund_mgmt' ? 'active-dash' : ''}`}
+                            onClick={() => setView('fund_mgmt')}
+                        >
+                            <i className="fa-solid fa-chart-pie"></i>
+                            <span>Fund Management</span>
+                        </div>
+                        <div
+                            className={`menu-item ${currentView === 'pension_payroll' ? 'active-dash' : ''}`}
+                            onClick={() => setView('pension_payroll')}
+                        >
+                            <i className="fa-solid fa-money-check-dollar"></i>
+                            <span>Pension Payroll</span>
+                        </div>
+                        <div
+                            className={`menu-item ${currentView === 'member_admin' ? 'active-dash' : ''}`}
+                            onClick={() => setView('member_admin')}
+                        >
+                            <i className="fa-solid fa-users-gear"></i>
+                            <span>Member Admin</span>
+                        </div>
+                        <div
+                            className={`menu-item ${currentView === 'contribution_mgmt' ? 'active-dash' : ''}`}
+                            onClick={() => setView('contribution_mgmt')}
+                        >
+                            <i className="fa-solid fa-hand-holding-dollar"></i>
+                            <span>Contribution Mgmt</span>
+                        </div>
+
+
+                        <div className="menu-category">PORTAL SERVICES</div>
 
                         <div className="menu-item active">
                             <i className="fa-regular fa-user"></i>
@@ -673,6 +712,14 @@
                             <i className="fa-regular fa-user"></i>
                             <span>Other Services</span>
                         </div>
+                        <div className="menu-category">SYSTEM</div>
+                        <div
+                            className={`menu-item ${currentView === 'web_portal' ? 'active-dash' : ''}`}
+                            onClick={() => setView('web_portal')}
+                        >
+                            <i className="fa-solid fa-globe"></i>
+                            <span>Web Portal Services</span>
+                        </div>
                     </div>
 
                     <div style={{ padding: '16px' }}>
@@ -692,7 +739,7 @@
                         <div className="icon-btn" style={{ border: 'none', padding: 0 }}>
                             <i className="fa-solid fa-bars"></i>
                         </div>
-                        <div className="header-brand">iCARE</div>
+                        <div className="header-brand"></div>
                         <div className="header-links">
                             <div className="header-link">
                                 <i className="fa-solid fa-link"></i>
@@ -1181,6 +1228,156 @@
         );
 
 
+
+        // --- PAS Business Views ---
+
+        const AccountingView = () => (
+            <div className="page-content">
+                <div className="breadcrumbs">Operations &gt; Accounting</div>
+                <h1 className="current-page-title">Accounting</h1>
+                <div className="card" style={{ marginTop: '24px' }}>
+                    <h3 className="card-title">General Ledger & Accounts</h3>
+                    <p style={{ color: '#6B7280', margin: '16px 0' }}>Manage chart of accounts, journals, and financial reporting.</p>
+                    <div className="dashboard-grid">
+                        <button className="btn-navy" style={{ gap: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}> <i className="fa-solid fa-book"></i> General Ledger</button>
+                        <button className="btn-navy" style={{ gap: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}> <i className="fa-solid fa-file-invoice-dollar"></i> Accounts Payable</button>
+                        <button className="btn-navy" style={{ gap: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}> <i className="fa-solid fa-file-invoice"></i> Accounts Receivable</button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const FundMgmtView = () => (
+            <div className="page-content">
+                <div className="breadcrumbs">Operations &gt; Fund Management</div>
+                <h1 className="current-page-title">Fund Management</h1>
+                <div className="dashboard-grid" style={{ marginTop: '24px' }}>
+                    <div className="card">
+                        <h3 className="card-title">Investment Portfolio</h3>
+                        <div style={{ fontSize: '24px', fontWeight: 'bold', margin: '16px 0', color: '#1B254B' }}>K 45,230,000.00</div>
+                        <div className="kyc-bar" style={{ width: '100%' }}>
+                            <div style={{ height: '100%', width: '65%', background: '#1B254B' }}></div>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginTop: '8px', color: '#6B7280' }}>
+                            <span>Fixed Income (65%)</span>
+                            <span>Equity (35%)</span>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <h3 className="card-title">Performance</h3>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '16px 0' }}>
+                            <div className="sector-icon" style={{ background: '#D1FAE5', color: '#059669' }}> <i className="fa-solid fa-arrow-trend-up"></i> </div>
+                            <div>
+                                <div style={{ fontWeight: 'bold' }}>+12.5%</div>
+                                <div style={{ fontSize: '12px', color: '#6B7280' }}>YTD Return</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const PensionPayrollView = () => (
+            <div className="page-content">
+                <div className="breadcrumbs">Operations &gt; Pension Payroll</div>
+                <h1 className="current-page-title">Pension Payroll</h1>
+                <div className="card" style={{ marginTop: '24px' }}>
+                    <div className="card-header">
+                        <h3 className="card-title">Payroll Run: January 2026</h3>
+                        <span style={{ background: '#DBEAFE', color: '#1E40AF', padding: '4px 12px', borderRadius: '16px', fontSize: '12px', fontWeight: '600' }}>Upcoming</span>
+                    </div>
+                    <table className="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Pensioner Group</th>
+                                <th>Count</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Normal Retirement</td>
+                                <td>1,245</td>
+                                <td>K 4,500,000</td>
+                                <td><i className="fa-solid fa-circle-check" style={{ color: '#059669' }}></i> Ready</td>
+                            </tr>
+                            <tr>
+                                <td>Early Retirement</td>
+                                <td>432</td>
+                                <td>K 1,200,000</td>
+                                <td><i className="fa-solid fa-circle-check" style={{ color: '#059669' }}></i> Ready</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style={{ marginTop: '24px', display: 'flex', gap: '16px' }}>
+                        <button className="btn-navy">Run Payroll</button>
+                        <button className="btn-gold">Generate Reports</button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const MemberAdminView = () => (
+            <div className="page-content">
+                <div className="breadcrumbs">Operations &gt; Member Administration</div>
+                <h1 className="current-page-title">Member Administration</h1>
+                <div className="card" style={{ marginTop: '24px' }}>
+                    <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
+                        <input type="text" placeholder="Search Member by SSN or Name..." style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB' }} />
+                        <button className="btn-navy"><i className="fa-solid fa-magnifying-glass"></i> Search</button>
+                    </div>
+                    <div style={{ padding: '32px', textAlign: 'center', color: '#9CA3AF', border: '2px dashed #E5E7EB', borderRadius: '8px' }}>
+                        Search for a member to manage details, reset PINs, or update records.
+                    </div>
+                </div>
+            </div>
+        );
+
+        const ContributionMgmtView = () => (
+            <div className="page-content">
+                <div className="breadcrumbs">Operations &gt; Contribution Management</div>
+                <h1 className="current-page-title">Contribution Management</h1>
+                <div className="dashboard-grid" style={{ marginTop: '24px' }}>
+                    <div className="card">
+                        <h3 className="card-title">Unposted Contributions</h3>
+                        <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#DC2626', margin: '16px 0' }}>14</div>
+                        <p style={{ fontSize: '13px', color: '#6B7280' }}>Returns requiring manual intervention.</p>
+                        <button className="btn-navy" style={{ marginTop: '16px', width: '100%' }}>Process Queue</button>
+                    </div>
+                    <div className="card">
+                        <h3 className="card-title">Reconciliation</h3>
+                        <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#F59E0B', margin: '16px 0' }}>K 120k</div>
+                        <p style={{ fontSize: '13px', color: '#6B7280' }}>Unreconciled bank deposits.</p>
+                        <button className="btn-gold" style={{ marginTop: '16px', width: '100%' }}>View Suspense Account</button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const WebPortalView = () => (
+            <div className="page-content">
+                <div className="breadcrumbs">System &gt; Web Portal Services</div>
+                <h1 className="current-page-title">Web Portal Services</h1>
+                <div className="dashboard-grid" style={{ marginTop: '24px' }}>
+                    <div className="card">
+                        <h3 className="card-title">Portal Usage</h3>
+                        <div className="stat-item" style={{ textAlign: 'left', margin: '16px 0' }}>
+                            <h3 style={{ fontSize: '32px' }}>85%</h3>
+                            <span>Uptime (Last 30 days)</span>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <h3 className="card-title">Content Management</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
+                            <div className="action-link"><i className="fa-solid fa-bullhorn"></i> Manage Announcements</div>
+                            <div className="action-link"><i className="fa-solid fa-file-pdf"></i> Upload Documents</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
         // --- APP ---
 
         const App = () => {
@@ -1189,6 +1386,12 @@
             const renderView = () => {
                 switch (view) {
                     case 'dashboard': return <DashboardView />;
+                    case 'accounting': return <AccountingView />;
+                    case 'fund_mgmt': return <FundMgmtView />;
+                    case 'pension_payroll': return <PensionPayrollView />;
+                    case 'member_admin': return <MemberAdminView />;
+                    case 'contribution_mgmt': return <ContributionMgmtView />;
+                    case 'web_portal': return <WebPortalView />;
                     case 'member_home': return <MemberHomeView />;
                     case 'benefits': return <BenefitsView />;
                     case 'contributions': return <ContributionsView />;
