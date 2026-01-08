@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tobacco Board of Zambia | Digital Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fcfdf5',
+                            100: '#f6fae6',
+                            200: '#eaf4c4',
+                            300: '#d7ea96',
+                            400: '#bfdc63',
+                            500: '#a3c838', // Leaf Green
+                            600: '#81a326',
+                            700: '#627d20',
+                            800: '#4f631f',
+                            900: '#42531e',
+                            950: '#222e0c',
+                        },
+                        copper: {
+                            50: '#fbf5f0',
+                            100: '#f5e8db',
+                            200: '#ecd0b6',
+                            300: '#e0b28a',
+                            400: '#d28f5d',
+                            500: '#cb7138', // Copper
+                            600: '#bd5a2e',
+                            700: '#9d4526',
+                            800: '#803a26',
+                            900: '#683222',
+                            950: '#38180f',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for cleaner UI */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cb7138;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9d4526;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-marquee {
+            animation: marquee 20s linear infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- STATE MANAGEMENT SCRIPT -->
+    <script>
+        // Simple client-side router and state manager
+        const AppState = {
+            currentUser: null, // null | 'farmer' | 'staff'
+            currentView: 'home',
+
+            navigate: (viewName) => {
+                AppState.currentView = viewName;
+                render();
+                window.scrollTo(0, 0);
+            },
+
+            login: (role) => {
+                AppState.currentUser = {
+                    name: role === 'farmer' ? 'John Banda' : 'Mary Mulenga',
+                    role: role,
+                    id: 'TBZ-' + Math.floor(Math.random() * 10000)
+                };
+                if (role === 'staff') {
+                    AppState.navigate('admin');
+                } else {
+                    AppState.navigate('dashboard');
+                }
+            },
+
+            logout: () => {
+                AppState.currentUser = null;
+                AppState.navigate('home');
+            }
+        };
+
+        // Render Function
+        function render() {
+            // Update Navbar
+            document.getElementById('nav-auth-section').innerHTML = AppState.currentUser
+                ? `<button onclick="AppState.navigate('dashboard')" class="text-sm font-medium hover:text-brand-600 mr-4">Dashboard</button>
+                   <button onclick="AppState.logout()" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-200 transition">Logout</button>`
+                : `<button onclick="AppState.navigate('login')" class="text-slate-600 hover:text-brand-700 font-medium text-sm mr-4">Log In</button>
+                   <button onclick="AppState.navigate('register')" class="bg-brand-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 transition shadow-lg shadow-brand-500/30">Get Licensed</button>`;
+
+            // Toggle Views
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            const activeView = document.getElementById(`view-${AppState.currentView}`);
+            if (activeView) {
+                activeView.classList.remove('hidden');
+                activeView.classList.add('fade-in');
+            }
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            render();
+            lucide.createIcons();
+        });
+    </script>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer" onclick="AppState.navigate('home')">
+                    <div
+                        class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg mr-3">
+                        T</div>
+                    <div>
+                        <h1 class="font-serif font-bold text-slate-900 text-lg leading-tight">Tobacco Board</h1>
+                        <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Rep. of Zambia</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="AppState.navigate('home')"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition">Home</button>
+                    <button onclick="AppState.navigate('about')"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition">About TBZ</button>
+                    <button onclick="AppState.navigate('services')"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition">Services</button>
+                    <button onclick="AppState.navigate('market')"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition">Market Data</button>
+                </div>
+
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center" id="nav-auth-section">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="pt-16 min-h-screen">
+
+        <!-- [VIEW: HOME] -->
+        <section id="view-home" class="view-section">
+            <!-- Hero -->
+            <div class="relative bg-slate-900 py-24 sm:py-32 overflow-hidden">
+                <img src="./images/hero.png" class="absolute inset-0 w-full h-full object-cover opacity-40"
+                    alt="Tobacco Field">
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
+
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-2xl">
+                        <div
+                            class="inline-flex items-center space-x-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-3 py-1 mb-6">
+                            <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                            <span class="text-brand-300 text-xs font-semibold uppercase tracking-wide">2025 Licensing
+                                Open</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-6xl font-serif font-bold text-white tracking-tight mb-6">
+                            Regulating Growth.<br>
+                            <span class="text-brand-500">Empowering Farmers.</span>
+                        </h1>
+                        <p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                            The official digital platform of the Tobacco Board of Zambia. Access market prices, apply
+                            for licenses, and stay compliant with regulatory standards—all in one place.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="AppState.navigate('register')"
+                                class="bg-brand-600 text-white hover:bg-brand-500 px-8 py-3.5 rounded-xl text-lg font-semibold transition shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2">
+                                Register Now <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                            <button onclick="AppState.navigate('services')"
+                                class="bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/10 px-8 py-3.5 rounded-xl text-lg font-medium transition flex items-center justify-center gap-2">
+                                View Services
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="py-24 bg-slate-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-16">
+                        <h2 class="text-sm font-semibold text-brand-600 uppercase tracking-widest mb-2">Our Core Mandate
+                        </h2>
+                        <h3 class="text-3xl font-serif font-bold text-slate-900 mb-4">Streamlined Services for Every
+                            Stakeholder</h3>
+                        <p class="text-slate-600">We've digitized our operations to ensure transparency, efficiency, and
+                            ease of doing business in the tobacco sector.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div
+                            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand-100 transition group">
+                            <div
+                                class="w-14 h-14 bg-brand-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-600 transition duration-300">
+                                <i data-lucide="file-check"
+                                    class="w-7 h-7 text-brand-600 group-hover:text-white transition"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">E-Licensing</h4>
+                            <p class="text-slate-600 mb-6">Apply for Grower, Buyer, and Floor Operator licenses online.
+                                Track application status in real-time.</p>
+                            <button onclick="AppState.navigate('register')"
+                                class="text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">Start
+                                Application <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div
+                            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-copper-100 transition group">
+                            <div
+                                class="w-14 h-14 bg-copper-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-copper-500 transition duration-300">
+                                <i data-lucide="bar-chart-3"
+                                    class="w-7 h-7 text-copper-600 group-hover:text-white transition"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">Market Intelligence</h4>
+                            <p class="text-slate-600 mb-6">Access daily floor prices, historical trends, and global
+                                tobacco market analysis reports.</p>
+                            <button onclick="AppState.navigate('market')"
+                                class="text-copper-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">View
+                                Data <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div
+                            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-blue-100 transition group">
+                            <div
+                                class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition duration-300">
+                                <i data-lucide="book-open"
+                                    class="w-7 h-7 text-blue-600 group-hover:text-white transition"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">Knowledge Hub</h4>
+                            <p class="text-slate-600 mb-6">Best practices for cultivation, sustainable farming guides,
+                                and regulatory compliance documents.</p>
+                            <button
+                                class="text-blue-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">Browse
+                                Library <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [VIEW: LOGIN] -->
+        <section id="view-login" class="view-section hidden flex items-center justify-center min-h-[80vh] bg-slate-50">
+            <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="bg-slate-900 px-8 py-6">
+                    <h2 class="text-2xl font-serif font-bold text-white">Welcome Back</h2>
+                    <p class="text-slate-400 text-sm">Sign in to your dashboard</p>
+                </div>
+                <div class="p-8 space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Email or License ID</label>
+                        <input type="text"
+                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition"
+                            placeholder="e.g. farmer@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                        <input type="password"
+                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition"
+                            value="password123">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox"
+                                class="w-4 h-4 text-brand-600 border-slate-300 rounded focus:ring-brand-500">
+                            <span class="ml-2 text-sm text-slate-600">Remember me</span>
+                        </label>
+                        <a href="#" class="text-sm font-medium text-brand-600 hover:text-brand-700">Forgot password?</a>
+                    </div>
+                    <button onclick="AppState.login('farmer')"
+                        class="w-full bg-brand-600 text-white py-2.5 rounded-lg font-semibold hover:bg-brand-700 transition shadow-lg shadow-brand-500/30">Sign
+                        In (Farmer Demo)</button>
+                    <button onclick="AppState.login('staff')"
+                        class="w-full bg-slate-800 text-white py-2.5 rounded-lg font-semibold hover:bg-slate-900 transition mt-2">Sign
+                        In (Staff Demo)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- [VIEW: DASHBOARD] -->
+        <section id="view-dashboard" class="view-section hidden bg-slate-50 min-h-screen pb-20">
+            <!-- Dashboard Header -->
+            <div class="bg-white border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-2xl font-serif font-bold text-slate-900">Dashboard</h1>
+                            <p class="text-slate-500 text-sm">Welcome back, <span
+                                    class="font-medium text-slate-900">John Banda</span></p>
+                        </div>
+                        <div class="flex gap-3">
+                            <button
+                                class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50">
+                                <i data-lucide="download" class="w-4 h-4"></i> Reports
+                            </button>
+                            <button
+                                class="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg text-sm font-medium hover:bg-brand-700 shadow-sm">
+                                <i data-lucide="plus" class="w-4 h-4"></i> New Application
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">License Status</h3>
+                            <span
+                                class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded uppercase">Active</span>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">Grower Class A</p>
+                        <p class="text-xs text-slate-400 mt-1">Expires: 31 Dec 2025</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">Est. Yield</h3>
+                            <i data-lucide="sprout" class="w-4 h-4 text-brand-500"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">12,500 kg</p>
+                        <p class="text-xs text-green-600 mt-1 flex items-center"><i data-lucide="trending-up"
+                                class="w-3 h-3 mr-1"></i> +5% vs 2024</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">Avg. Market Price</h3>
+                            <i data-lucide="coins" class="w-4 h-4 text-copper-500"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">$3.45 <span
+                                class="text-sm font-normal text-slate-400">/ kg</span></p>
+                        <p class="text-xs text-slate-400 mt-1">Last updated: Today</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">Notifications</h3>
+                            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">2 New</p>
+                        <p class="text-xs text-slate-400 mt-1">Action required</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Main Chart Area -->
+                    <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                        <h3 class="font-bold text-slate-900 mb-6 font-serif">Application History</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="text-xs text-slate-400 uppercase bg-slate-50">
+                                    <tr>
+                                        <th class="px-4 py-3 rounded-l-lg">App ID</th>
+                                        <th class="px-4 py-3">Type</th>
+                                        <th class="px-4 py-3">Date</th>
+                                        <th class="px-4 py-3">Status</th>
+                                        <th class="px-4 py-3 rounded-r-lg">Action</th>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Area -->
+                    <div class="bg-slate-900 rounded-xl shadow-lg p-6 text-white relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 -mr-6 -mt-6 w-32 h-32 bg-brand-500 rounded-full opacity-20 blur-2xl">
+                        </div>
+                        <h3 class="font-bold text-lg mb-4 font-serif">Compliance Alert</h3>
+                        <p class="text-slate-300 text-sm mb-6">The 2025 licensing window closes in <span
+                                class="text-white font-bold">14 days</span>. Ensure all return forms are submitted.</p>
+                        <button
+                            class="w-full bg-white text-slate-900 py-2 rounded-lg text-sm font-bold hover:bg-slate-100 transition">Submit
+                            Returns</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [VIEW: ABOUT] -->
+        <section id="view-about" class="view-section hidden bg-white">
+            <div class="bg-slate-900 py-20 text-center">
+                <h1 class="text-4xl font-serif font-bold text-white mb-4">About TBZ</h1>
+                <p class="text-slate-400 max-w-2xl mx-auto">Regulating, promoting, and developing the tobacco industry
+                    since 1968.</p>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-brand-600 font-bold uppercase tracking-wide mb-2 text-sm">Our History</h2>
+                        <h3 class="text-3xl font-serif font-bold text-slate-900 mb-6">Over 50 Years of Excellence</h3>
+                        <p class="text-slate-600 mb-4 leading-relaxed">The Tobacco Board of Zambia (TBZ) was established
+                            under the Tobacco Act of 1967 (Chapter 237 of the Laws of Zambia). Our mandate is to
+                            regulate, promote, and develop the tobacco industry in Zambia.</p>
+                        <ul class="space-y-3 mt-6">
+                            <li class="flex items-center text-slate-700"><i data-lucide="check-circle"
+                                    class="w-5 h-5 text-brand-600 mr-3"></i> Promoting orderly marketing in Lusaka,
+                                Eastern, and Southern Provinces</li>
+                            <li class="flex items-center text-slate-700"><i data-lucide="check-circle"
+                                    class="w-5 h-5 text-brand-600 mr-3"></i> Enforcing quality standards (Zambia Good
+                                Agricultural Practices)</li>
+                            <li class="flex items-center text-slate-700"><i data-lucide="check-circle"
+                                    class="w-5 h-5 text-brand-600 mr-3"></i> Maximizing value for Zambian farmers</li>
+                        </ul>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="./images/texture.png" class="rounded-2xl shadow-lg mt-8 object-cover h-64 w-full">
+                        <img src="./images/farmers.png" class="rounded-2xl shadow-lg object-cover h-64 w-full">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [VIEW: SERVICES] -->
+        <section id="view-services" class="view-section hidden bg-slate-50">
+            <div class="bg-white border-b border-slate-200 py-16 text-center">
+                <h1 class="text-3xl font-serif font-bold text-slate-900 mb-2">Our Services</h1>
+                <p class="text-slate-500">Comprehensive support for the entire value chain.</p>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <div
+                            class="w-12 h-12 bg-brand-100 rounded-lg flex items-center justify-center mb-4 text-brand-600">
+                            <i data-lucide="scroll-text" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Licensing & Registration</h3>
+                        <p class="text-slate-600 text-sm mb-4">Issuance of licenses for growers, buyers, floor
+                            operators, and exporters.</p>
+                        <button onclick="AppState.navigate('register')"
+                            class="text-brand-600 font-medium text-sm hover:underline">Apply now &rarr;</button>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <div
+                            class="w-12 h-12 bg-copper-100 rounded-lg flex items-center justify-center mb-4 text-copper-600">
+                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Extension Services</h3>
+                        <p class="text-slate-600 text-sm mb-4">Providing technical knowledge and training to farmers to
+                            improve yield quality.</p>
+                        <button onclick="alert('Training schedule for upcoming season will be published here.')"
+                            class="text-copper-600 font-medium text-sm hover:underline">View schedule &rarr;</button>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <div
+                            class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 text-blue-600">
+                            <i data-lucide="scale" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Arbitration</h3>
+                        <p class="text-slate-600 text-sm mb-4">Dispute resolution between growers and buyers during
+                            marketing season.</p>
+                        <button onclick="alert('Arbitration guidelines coming soon.')"
+                            class="text-blue-600 font-medium text-sm hover:underline">Learn more &rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [VIEW: MARKET] -->
+        <section id="view-market" class="view-section hidden bg-slate-50 min-h-screen">
+            <div class="bg-slate-900 text-white py-12">
+                <div class="max-w-7xl mx-auto px-4">
+                    <h1 class="text-3xl font-serif font-bold mb-2">Market Data Center</h1>
+                    <div class="flex items-center space-x-4 text-sm text-slate-400">
+                        <span class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-1"></i> Live
+                            Updates</span>
+                        <span class="flex items-center"><i data-lucide="globe" class="w-4 h-4 mr-1"></i> Global
+                            Indices</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ticker -->
+            <div class="bg-slate-800 overflow-hidden py-2">
+                <div class="whitespace-nowrap animate-marquee flex space-x-8 text-sm text-white">
+                    <span class="font-mono text-green-400">FLUE-CURED (LUSAKA): $3.45 (+0.12)</span>
+                    <span class="font-mono text-slate-400">|</span>
+                    <span class="font-mono text-white">BURLEY (CHIPATA): $2.80 (0.00)</span>
+                    <span class="font-mono text-slate-400">|</span>
+                    <span class="font-mono text-red-400">DARK FIRE (KAOMA): $2.15 (-0.05)</span>
+                    <span class="font-mono text-slate-400">|</span>
+                    <span class="font-mono text-green-400">SUN-CURED: $1.95 (+0.05)</span>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+                        <h3 class="font-bold text-slate-900">Regional Floor Prices (2025 Start)</h3>
+                        <button class="text-sm text-brand-600 hover:text-brand-700 font-medium flex items-center"><i
+                                data-lucide="download" class="w-4 h-4 mr-1"></i> Export CSV</button>
+                    </div>
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-50 text-slate-500 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-3">Region</th>
+                                <th class="px-6 py-3">Grade A</th>
+                                <th class="px-6 py-3">Grade B</th>
+                                <th class="px-6 py-3">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="px-6 py-4 font-medium">Lusaka West</td>
+                                <td class="px-6 py-4 text-slate-900 bg-green-50/50">$3.80</td>
+                                <td class="px-6 py-4 text-slate-600">$3.10</td>
+                                <td class="px-6 py-4 text-green-600"><i data-lucide="trending-up" class="w-4 h-4"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-medium">Eastern (Chipata)</td>
+                                <td class="px-6 py-4 text-slate-900 bg-green-50/50">$3.65</td>
+                                <td class="px-6 py-4 text-slate-600">$2.95</td>
+                                <td class="px-6 py-4 text-slate-400"><i data-lucide="minus" class="w-4 h-4"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-medium">Southern (Choma)</td>
+                                <td class="px-6 py-4 text-slate-900 bg-green-50/50">$3.75</td>
+                                <td class="px-6 py-4 text-slate-600">$3.05</td>
+                                <td class="px-6 py-4 text-green-600"><i data-lucide="trending-up" class="w-4 h-4"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- [VIEW: ADMIN] -->
+        <section id="view-admin" class="view-section hidden bg-slate-50 min-h-screen pb-20">
+            <div class="bg-slate-900 border-b border-slate-800 text-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-red-500 text-xs font-bold px-2 py-1 rounded">STAFF PORTAL</span>
+                        <span class="text-slate-400 text-sm">Logged in as: Mary Mulenga (Operations)</span>
+                    </div>
+                    <button onclick="AppState.logout()" class="text-sm text-slate-400 hover:text-white">Sign
+                        Out</button>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <h1 class="text-2xl font-serif font-bold text-slate-900 mb-6">Overview</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-slate-500 text-sm font-medium mb-2">Pending Applications</h3>
+                        <p class="text-3xl font-bold text-slate-900">42</p>
+                        <p class="text-xs text-red-500 mt-1">Requires immediate attention</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-slate-500 text-sm font-medium mb-2">Compliance Rate</h3>
+                        <p class="text-3xl font-bold text-slate-900">88%</p>
+                        <p class="text-xs text-green-500 mt-1">+2% from last month</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-slate-500 text-sm font-medium mb-2">Total Growers</h3>
+                        <p class="text-3xl font-bold text-slate-900">14,203</p>
+                        <p class="text-xs text-slate-400 mt-1">Registered for 2025 season</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-100 font-bold text-slate-900">Recent Implementations
+                    </div>
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-50 text-slate-500 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-3">Applicant</th>
+                                <th class="px-6 py-3">Type</th>
+                                <th class="px-6 py-3">Date</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="px-6 py-4 font-medium">Banda Farms Ltd (Mkushi)</td>
+                                <td class="px-6 py-4">Commercial Grower</td>
+                                <td class="px-6 py-4 text-slate-500">Today, 10:42 AM</td>
+                                <td class="px-6 py-4"><span
+                                        class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">Pending</span>
+                                </td>
+                                <td class="px-6 py-4"><button
+                                        class="text-brand-600 font-medium hover:underline">Review</button></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-medium">Eastern Co-op (Chipata)</td>
+                                <td class="px-6 py-4">Buyer License A</td>
+                                <td class="px-6 py-4 text-slate-500">Yesterday</td>
+                                <td class="px-6 py-4"><span
+                                        class="px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full">Flagged</span>
+                                </td>
+                                <td class="px-6 py-4"><button
+                                        class="text-brand-600 font-medium hover:underline">Review</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- [VIEW: REGISTER / WIZARD] -->
+        <section id="view-register" class="view-section hidden bg-slate-50 min-h-screen py-10">
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="bg-slate-900 px-8 py-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-serif font-bold text-white">License Application</h2>
+                        <p class="text-slate-400 text-sm">Step 1 of 3: Personal Details</p>
+                    </div>
+                    <button onclick="AppState.navigate('home')" class="text-slate-400 hover:text-white"><i
+                            data-lucide="x" class="w-6 h-6"></i></button>
+                </div>
+
+                <div class="p-8">
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-100 rounded-full h-2 mb-8">
+                        <div class="bg-brand-600 h-2 rounded-full" style="width: 33%"></div>
+                    </div>
+
+                    <form
+                        onsubmit="event.preventDefault(); AppState.navigate('dashboard'); alert('Application Submitted (Mock)!')"
+                        class="space-y-6">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">First Name</label>
+                                <input type="text"
+                                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none"
+                                    placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
+                                <input type="text"
+                                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none"
+                                    placeholder="Banda">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">NRC Number</label>
+                            <input type="text"
+                                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none"
+                                placeholder="123456/10/1">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Province</label>
+                            <select
+                                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none bg-white">
+                                <option>Eastern</option>
+                                <option>Central</option>
+                                <option>Southern</option>
+                                <option>Lusaka</option>
+                            </select>
+                        </div>
+
+                        <div class="pt-6 flex justify-end gap-3">
+                            <button type="button" onclick="AppState.navigate('home')"
+                                class="px-6 py-2 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50">Cancel</button>
+                            <button type="submit"
+                                class="px-6 py-2 bg-brand-600 text-white rounded-lg font-medium hover:bg-brand-700 shadow-md">Next
+                                Step &rarr;</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CHATBOT WIDGET -->
+    <div id="chatbot-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <!-- Chat Window -->
+        <div id="chat-window"
+            class="hidden bg-slate-50 w-80 h-96 rounded-2xl shadow-2xl border border-slate-200 mb-4 flex flex-col overflow-hidden">
+            <div class="bg-green-600 p-4 text-white flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"><i
+                            data-lucide="message-circle" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm">TBZ Assistant</h4>
+                        <p class="text-[10px] text-green-100 flex items-center"><span
+                                class="w-1.5 h-1.5 bg-green-300 rounded-full mr-1"></span> Online</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('chat-window').classList.add('hidden')"
+                    class="hover:bg-white/10 p-1 rounded"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+
+            <div class="flex-1 p-4 overflow-y-auto space-y-3" id="chat-messages">
+                <div class="flex justify-start">
+                    <div
+                        class="bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-2xl rounded-tl-none text-sm max-w-[85%] shadow-sm">
+                        Mwagwan! How can I help you today?
+                    </div>
+                </div>
+                <div class="flex justify-start">
+                    <div
+                        class="bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-2xl rounded-tl-none text-sm max-w-[85%] shadow-sm">
+                        Select an option below:
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2 mt-2">
+                    <button
+                        class="bg-green-100 text-green-800 text-xs py-2 px-3 rounded-lg text-left hover:bg-green-200 transition">📝
+                        How to register?</button>
+                    <button
+                        class="bg-green-100 text-green-800 text-xs py-2 px-3 rounded-lg text-left hover:bg-green-200 transition">💰
+                        Check market prices</button>
+                    <button
+                        class="bg-green-100 text-green-800 text-xs py-2 px-3 rounded-lg text-left hover:bg-green-200 transition">📍
+                        Locate sales floor</button>
+                </div>
+            </div>
+
+            <div class="p-3 bg-white border-t border-slate-200">
+                <div class="flex items-center gap-2">
+                    <input type="text" placeholder="Type a message..."
+                        class="flex-1 text-sm border border-slate-200 rounded-full px-4 py-2 outline-none focus:border-green-500 transition">
+                    <button
+                        class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-700 transition"><i
+                            data-lucide="send" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Float Button -->
+        <button onclick="document.getElementById('chat-window').classList.toggle('hidden')"
+            class="bg-[#25D366] text-white w-14 h-14 rounded-full shadow-lg hover:bg-[#20bd5a] transition flex items-center justify-center transform hover:scale-110">
+            <i data-lucide="message-circle" class="w-8 h-8"></i>
+        </button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-1">
+                <div class="text-white font-serif font-bold text-lg mb-4">TBZ</div>
+                <p class="text-sm">Regulating the tobacco industry for a sustainable and prosperous Zambia.</p>
+            </div>
+
+            <div>
+                <h4 class="text-white font-medium mb-4">Quick Limits</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-brand-400 transition">Home</a></li>
+                    <li><a href="#" class="hover:text-brand-400 transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-brand-400 transition">Licensing</a></li>
+                    <li><a href="#" class="hover:text-brand-400 transition">Market Data</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-medium mb-4">Support</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-brand-400 transition">Help Center</a></li>
+                    <li><a href="#" class="hover:text-brand-400 transition">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-brand-400 transition">Report Issue</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-medium mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><i class="inline-block w-4 mr-2"></i> info@tbz.co.zm</li>
+                    <li><i class="inline-block w-4 mr-2"></i> +260 211 123 456</li>
+                    <li><i class="inline-block w-4 mr-2"></i> Lusaka, Zambia</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800 text-sm text-center">
+            &copy; 2025 Tobacco Board of Zambia. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+
+</html>

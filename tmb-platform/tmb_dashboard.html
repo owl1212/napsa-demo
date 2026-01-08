@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBZ Portal | Grower Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1A4D2E', 'primary-dark': '#0F2F1B',
+                        action: '#CCFF00', 'action-hover': '#B3E600',
+                        accent: '#D4A574', surface: '#FAFAF8',
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    borderRadius: { 'pill': '9999px', 'card': '24px' }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-surface text-gray-800 antialiased min-h-screen flex">
+
+    <!-- SIDEBAR (Desktop) -->
+    <aside class="hidden md:flex flex-col w-72 bg-primary text-white p-6 justify-between fixed h-full z-10">
+        <div>
+            <div class="flex items-center gap-2 mb-10">
+                <div class="w-8 h-8 rounded-lg bg-action"></div>
+                <span class="font-bold text-xl tracking-wide">TBZ Portal</span>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="#"
+                    class="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-xl font-bold text-sm text-action">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="tmb_register.html"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl font-medium text-sm text-white/70 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Licensing
+                </a>
+                <a href="tmb_market.html"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl font-medium text-sm text-white/70 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                    </svg>
+                    Market Data
+                </a>
+                <a href="tmb_compliance.html"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl font-medium text-sm text-white/70 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                    Compliance
+                </a>
+                <a href="tmb_booking.html"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl font-medium text-sm text-white/70 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Bookings
+                </a>
+            </nav>
+        </div>
+
+        <div class="border-t border-white/10 pt-6">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary font-bold">CB
+                </div>
+                <div>
+                    <div class="text-sm font-bold">Caesar Banda</div>
+                    <div class="text-xs text-white/50">Grower #809210</div>
+                </div>
+            </div>
+            <a href="tmb_preview.html"
+                class="block w-full text-center py-2 text-xs font-bold bg-white/10 rounded-lg hover:bg-white/20">Log
+                Out</a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="md:ml-72 flex-grow p-6 md:p-12">
+
+        <!-- Header Mobile -->
+        <div class="md:hidden flex justify-between items-center mb-8">
+            <span class="font-bold text-primary text-xl">TBZ Portal</span>
+            <div class="flex gap-2">
+                <button class="p-2 bg-gray-100 rounded-lg"><svg class="w-6 h-6" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg></button>
+            </div>
+        </div>
+
+        <!-- Welcome -->
+        <div class="mb-10 flex justify-between items-end">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-1">Mwbwanji, Caesar</h1>
+                <p class="text-gray-500">Here is your farming overview for today.</p>
+            </div>
+            <a href="tmb_register.html"
+                class="bg-primary text-white px-6 py-3 rounded-pill text-sm font-bold shadow-lg hover:bg-primary-dark transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                New Application
+            </a>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- License Status -->
+            <div onclick="window.location.href='tmb_compliance.html'"
+                class="bg-primary text-white p-6 rounded-card shadow-xl cursor-pointer hover:-translate-y-1 transition">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-white/10 rounded-lg"><svg class="w-6 h-6 text-action" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg></div>
+                    <span class="bg-action text-primary text-xs font-bold px-3 py-1 rounded-full">Active</span>
+                </div>
+                <div class="text-3xl font-bold mb-1">Licensed</div>
+                <div class="text-white/60 text-sm">Valid until Dec 2025</div>
+            </div>
+
+            <!-- Market Price -->
+            <div onclick="window.location.href='tmb_market.html'"
+                class="bg-white p-6 rounded-card shadow-sm border border-gray-100 cursor-pointer hover:border-primary/30 transition">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-green-50 rounded-lg"><svg class="w-6 h-6 text-green-600" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg></div>
+                    <span class="text-green-600 text-xs font-bold bg-green-50 px-3 py-1 rounded-full">+2.4%</span>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-1">$3.45</div>
+                <div class="text-gray-400 text-sm">Avg. Floor Price Today</div>
+            </div>
+
+            <!-- Messages -->
+            <div class="bg-white p-6 rounded-card shadow-sm border border-gray-100 pb-0 overflow-hidden relative">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-orange-50 rounded-lg"><svg class="w-6 h-6 text-accent" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg></div>
+                    <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">1 New</span>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-1">Inspection</div>
+                <div class="text-gray-400 text-sm mb-4">Scheduled for 15 Jan</div>
+                <div class="h-1 bg-accent w-full absolute bottom-0 left-0"></div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <h3 class="font-bold text-xl mb-6">Recent Activity</h3>
+        <div class="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-100">
+                    <tr>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wide">Ref ID</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wide">Service</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wide">Date</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wide">Amount</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wide">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 text-sm">
+                    <tr class="hover:bg-gray-50/50 transition">
+                        <td class="px-6 py-4 font-mono text-gray-400">#REQ-0992</td>
+                        <td class="px-6 py-4 font-bold">2025 Grower License Renewal</td>
+                        <td class="px-6 py-4 text-gray-500">Today, 10:45 AM</td>
+                        <td class="px-6 py-4 font-bold text-gray-900">K 250.00</td>
+                        <td class="px-6 py-4"><span
+                                class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Paid</span>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50/50 transition">
+                        <td class="px-6 py-4 font-mono text-gray-400">#MD-1021</td>
+                        <td class="px-6 py-4 font-bold">Market Report Download (PDF)</td>
+                        <td class="px-6 py-4 text-gray-500">Yesterday</td>
+                        <td class="px-6 py-4 font-bold text-gray-900">Free</td>
+                        <td class="px-6 py-4"><span
+                                class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold">Completed</span>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50/50 transition">
+                        <td class="px-6 py-4 font-mono text-gray-400">#LF-0012</td>
+                        <td class="px-6 py-4 font-bold">Afforestation Levy</td>
+                        <td class="px-6 py-4 text-gray-500">12 Dec 2024</td>
+                        <td class="px-6 py-4 font-bold text-gray-900">K 50.00</td>
+                        <td class="px-6 py-4"><span
+                                class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">Pending</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculator - LOLC Mobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #FAFAFA;
+        }
+
+        .mobile-container {
+            max-width: 480px;
+            /* Simulate mobile width on desktop */
+            margin: 0 auto;
+            background: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #E0E0E0;
+            outline: none;
+            margin: 15px 0;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-card {
+            background: var(--bg-dashboard);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .nav-bottom {
+            margin-top: auto;
+            border-top: 1px solid #EEE;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            background: white;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            color: #CCC;
+        }
+
+        .nav-icon.active {
+            color: var(--primary-blue);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile-container">
+        <div class="mobile-header">
+            <h2 style="font-size:20px; margin-bottom:4px; color:white;">Loan Calculator</h2>
+            <p style="font-size:13px; opacity:0.8; margin-bottom:0;">Check your eligibility instantly.</p>
+        </div>
+
+        <div style="padding: 24px;">
+
+            <!-- Product Selector -->
+            <div class="form-group">
+                <label class="form-label">Loan Product</label>
+                <select class="form-control" style="background:white;">
+                    <option>Salary Backed Loan</option>
+                    <option>Auto Loan</option>
+                    <option>Business Loan</option>
+                </select>
+            </div>
+
+            <!-- Amount Slider -->
+            <div class="form-group" style="margin-top:30px;">
+                <div class="flex justify-between">
+                    <label class="form-label">I want to borrow</label>
+                    <span class="text-blue" style="font-weight:700;">K <span id="amountVal">25,000</span></span>
+                </div>
+                <input type="range" min="1000" max="100000" value="25000" class="range-slider" id="amountRange">
+                <div class="flex justify-between text-muted" style="font-size:11px;">
+                    <span>K 1k</span>
+                    <span>K 100k</span>
+                </div>
+            </div>
+
+            <!-- Tenure Slider -->
+            <div class="form-group" style="margin-top:30px;">
+                <div class="flex justify-between">
+                    <label class="form-label">Repayment Period</label>
+                    <span class="text-blue" style="font-weight:700;"><span id="monthVal">12</span> Months</span>
+                </div>
+                <input type="range" min="3" max="60" value="12" class="range-slider" id="monthRange">
+                <div class="flex justify-between text-muted" style="font-size:11px;">
+                    <span>3 M</span>
+                    <span>60 M</span>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="result-card">
+                <div class="text-muted" style="font-size:12px; text-transform:uppercase; margin-bottom:8px;">Estimated
+                    Monthly Installment</div>
+                <div style="font-size:32px; font-weight:800; color:var(--primary-blue); margin-bottom:4px;">K 2,250
+                </div>
+                <div style="font-size:12px; color:var(--success-green); font-weight:600;">You are eligible!</div>
+            </div>
+
+            <button class="btn btn-primary w-full" style="margin-top:30px; font-size:16px; padding:14px;">Apply
+                Now</button>
+
+        </div>
+
+        <!-- Bottom Nav (Context) -->
+        <div class="nav-bottom">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-icon active">🔢</div>
+            <div class="nav-icon">📄</div>
+            <a href="admin_dashboard.html" class="nav-icon"
+                style="text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:18px;"
+                title="Staff Login (Demo)">🔐</a>
+        </div>
+    </div>
+
+    <script>
+        // Simple reactivity for demo purposes
+        const amountRange = document.getElementById('amountRange');
+        const monthRange = document.getElementById('monthRange');
+        const amountVal = document.getElementById('amountVal');
+        const monthVal = document.getElementById('monthVal');
+
+        amountRange.addEventListener('input', (e) => {
+            amountVal.innerText = parseInt(e.target.value).toLocaleString();
+        });
+
+        monthRange.addEventListener('input', (e) => {
+            monthVal.innerText = e.target.value;
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tobacco Board of Zambia | Eco-Tech Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1A4D2E', // Deep Forest Green
+                        'primary-dark': '#0F2F1B',
+                        action: '#CCFF00', // Electric Lime
+                        'action-hover': '#B3E600',
+                        accent: '#D4A574', // Gold
+                        surface: '#FAFAF8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'pill': '9999px',
+                        'card': '24px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-pattern {
+            background-color: #1A4D2E;
+            background-image: url('https://images.unsplash.com/photo-1625246333195-58197bd47d72?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-gray-800 antialiased">
+
+    <!-- NAVIGATION (Fixed, Minimal, Premium) -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 h-20">
+        <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="bg-primary text-white p-2 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                </div>
+                <span class="text-xl font-bold text-primary tracking-tight">TBZ</span>
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="tmb_about.html"
+                    class="text-sm font-semibold text-gray-600 hover:text-primary uppercase tracking-wide">About</a>
+                <a href="tmb_register.html"
+                    class="text-sm font-semibold text-gray-600 hover:text-primary uppercase tracking-wide">License</a>
+                <a href="tmb_market.html"
+                    class="text-sm font-semibold text-gray-600 hover:text-primary uppercase tracking-wide">Market
+                    Data</a>
+                <a href="tmb_compliance.html"
+                    class="text-sm font-semibold text-gray-600 hover:text-primary uppercase tracking-wide">Compliance</a>
+            </div>
+
+            <!-- Auth -->
+            <button onclick="window.location.href='tmb_login.html'"
+                class="bg-primary text-white px-6 py-2.5 rounded-pill text-sm font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20">
+                Portal Login
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (Full Bleed, Overlay) -->
+    <header class="relative w-full h-[850px] flex items-center overflow-hidden">
+        <!-- Background Image -->
+        <img src="https://images.unsplash.com/photo-1625246333195-09d9b63bd47a?q=80&w=1974&auto=format&fit=crop"
+            class="absolute inset-0 w-full h-full object-cover">
+
+        <!-- Neutral Overlay for Text Readability -->
+        <div class="absolute inset-0 bg-black/40"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 w-full pt-20">
+            <div class="max-w-2xl">
+                <!-- Badge -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md mb-8 ring-1 ring-white/10">
+                    <span class="w-2 h-2 rounded-full bg-action animate-pulse"></span>
+                    <span class="text-xs font-bold text-white uppercase tracking-widest">2025 Marketing Season
+                        Open</span>
+                </div>
+
+                <!-- Headline -->
+                <h1 class="text-6xl md:text-7xl font-bold text-white leading-[1.1] mb-8 tracking-tight">
+                    Powering <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-action to-white">Zambia's Green
+                        Gold.</span>
+                </h1>
+
+                <!-- Subhead -->
+                <p class="text-lg text-gray-300 mb-10 leading-relaxed max-w-lg font-light">
+                    The official digital gateway for 24,000+ growers. Get licensed, check floor prices, and ensure
+                    compliance in seconds from your mobile.
+                </p>
+
+                <!-- CTAs -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="tmb_register.html"
+                        class="bg-action text-primary-dark h-14 px-8 rounded-pill font-bold text-base hover:bg-action-hover transform hover:-translate-y-1 transition-all shadow-xl shadow-action/20 flex items-center justify-center gap-2">
+                        Get Licensed
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                    <a href="tmb_market.html"
+                        class="border-2 border-white text-white h-14 px-8 rounded-pill font-bold text-base hover:bg-white/10 transition-all flex items-center justify-center">
+                        View Market Prices
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SPACER for overlapping cards -->
+    <div class="h-24 bg-surface"></div>
+
+    <!-- STATS STRIP (Overlapping) -->
+    <section class="relative -mt-48 z-10 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Card 1 -->
+            <div
+                class="bg-white/95 backdrop-blur p-8 rounded-card border border-white/20 shadow-xl hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-action mb-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <div class="text-3xl font-bold text-primary mb-1">24,500+</div>
+                <div class="text-xs font-bold text-gray-500 uppercase tracking-wider">Active Growers</div>
+            </div>
+            <!-- Card 2 -->
+            <div
+                class="bg-primary-dark p-8 rounded-card border border-white/10 shadow-xl hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-white mb-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <div class="text-3xl font-bold text-white mb-1">36M kg</div>
+                <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">Volume Traded</div>
+            </div>
+            <!-- Card 3 -->
+            <div
+                class="bg-white/95 backdrop-blur p-8 rounded-card border border-white/20 shadow-xl hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-accent mb-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="text-3xl font-bold text-primary mb-1">$3.45</div>
+                <div class="text-xs font-bold text-gray-500 uppercase tracking-wider">Avg Price / kg</div>
+            </div>
+            <!-- Card 4 -->
+            <div
+                class="bg-primary/95 backdrop-blur p-8 rounded-card border border-white/20 shadow-xl hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-action mb-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <div class="text-3xl font-bold text-white mb-1">100%</div>
+                <div class="text-xs font-bold text-white/60 uppercase tracking-wider">Compliance Rate</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES GRID -->
+    <section class="py-32 bg-surface" id="market">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-4xl font-bold text-primary mb-6">Digital Services</h2>
+                <p class="text-xl text-gray-500 font-light">Efficient, transparent, and built for the future of Zambian
+                    agriculture.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div onclick="window.location.href='tmb_register.html'"
+                    class="group p-10 bg-white rounded-card border border-gray-100 hover:border-action transition-all duration-300 hover:shadow-2xl cursor-pointer relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-action/10 rounded-full -mr-16 -mt-16 group-hover:bg-action/20 transition-all">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-surface rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-4">E-Licensing</h3>
+                    <p class="text-gray-500 mb-8 leading-relaxed">Apply for grower, buyer, and floor operation licenses
+                        digitally.</p>
+                    <span
+                        class="text-primary font-bold flex items-center group-hover:text-amber-600 transition-colors">Start
+                        Application &rarr;</span>
+                </div>
+
+                <!-- Service 2 -->
+                <div onclick="window.location.href='tmb_market.html'"
+                    class="group p-10 bg-white rounded-card border border-gray-100 hover:border-action transition-all duration-300 hover:shadow-2xl cursor-pointer">
+                    <div
+                        class="w-16 h-16 bg-surface rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-4">Market Monitor</h3>
+                    <p class="text-gray-500 mb-8 leading-relaxed">Live sales floor data, volume tracking, and historical
+                        price analysis.</p>
+                    <span
+                        class="text-primary font-bold flex items-center group-hover:text-amber-600 transition-colors">View
+                        Data &rarr;</span>
+                </div>
+
+                <!-- Service 3 -->
+                <div onclick="window.location.href='tmb_resources.html'"
+                    class="group p-10 bg-white rounded-card border border-gray-100 hover:border-action transition-all duration-300 hover:shadow-2xl cursor-pointer">
+                    <div
+                        class="w-16 h-16 bg-surface rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-4">Resource Hub</h3>
+                    <p class="text-gray-500 mb-8 leading-relaxed">Download regulations, annual reports, and GAP manuals.
+                    </p>
+                    <span
+                        class="text-primary font-bold flex items-center group-hover:text-amber-600 transition-colors">Access
+                        Library &rarr;</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-primary text-white py-20 border-t-[6px] border-accent">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div class="col-span-1">
+                <h4 class="text-2xl font-bold mb-6">TBZ</h4>
+                <p class="text-white/60 text-sm leading-relaxed">Regulating and promoting the tobacco industry since
+                    1967.</p>
+            </div>
+            <div>
+                <h5 class="font-bold text-action text-xs uppercase tracking-widest mb-6">Platform</h5>
+                <ul class="space-y-4 text-sm text-white/70">
+                    <li><a href="tmb_register.html" class="hover:text-white">Grower Registration</a></li>
+                    <li><a href="tmb_resources.html" class="hover:text-white">Compliance Status</a></li>
+                    <li><a href="tmb_market.html" class="hover:text-white">Market Reports</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold text-action text-xs uppercase tracking-widest mb-6">Support</h5>
+                <ul class="space-y-4 text-sm text-white/70">
+                    <li><span class="hover:text-white cursor-pointer" onclick="toggleChat()">WhatsApp Bot</span></li>
+                    <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-white">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="bg-white/10 p-6 rounded-xl border border-white/5">
+                <p class="font-bold mb-2">Need Assistance?</p>
+                <p class="text-xs text-white/50 mb-4">Chat with our bot for instant help.</p>
+                <button onclick="toggleChat()"
+                    class="w-full py-3 bg-action text-primary font-bold rounded-pill text-sm hover:bg-white transition-colors">Start
+                    Chat</button>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-12 mt-12 border-t border-white/10 text-center text-xs text-white/40">
+            © 2025 Tobacco Board of Zambia.
+        </div>
+    </footer>
+
+    <!-- WHATSAPP CHATBOT WIDGET -->
+    <!-- Floating Button -->
+    <div onclick="toggleChat()"
+        class="fixed bottom-6 right-6 z-50 cursor-pointer shadow-2xl hover:scale-110 transition-transform">
+        <div class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center p-3">
+            <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.599 2.669-.698c1.009.549 1.936.889 3.221.889 3.182 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.767-5.77zm0 0c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.599 2.669-.698c1.009.549 1.936.889 3.221.889 3.182 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.767-5.77zM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12.031 4.545C16.142 4.545 19.455 7.858 19.455 11.969C19.455 16.08 16.142 19.394 12.031 19.394C10.428 19.394 9.07 18.98 8.01 18.23L4.939 19.049L5.759 15.979C5.009 14.92 4.607 13.572 4.607 11.969C4.607 7.858 7.92 4.545 12.031 4.545Z">
+                </path>
+            </svg>
+        </div>
+        <span
+            class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold">1</span>
+    </div>
+
+    <!-- Chat Window -->
+    <div id="chat-window"
+        class="fixed bottom-24 right-6 w-[350px] bg-white rounded-card shadow-2xl z-50 overflow-hidden hidden border border-gray-100 flex flex-col transition-all transform origin-bottom-right scale-95 opacity-0">
+        <!-- Header -->
+        <div class="bg-[#075E54] p-4 flex items-center gap-3 text-white">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">TBZ</div>
+            <div>
+                <h4 class="font-bold text-sm">TBZ Assistant</h4>
+                <p class="text-xs text-white/80">Typically replies instantly</p>
+            </div>
+            <button onclick="toggleChat()" class="ml-auto opacity-70 hover:opacity-100">×</button>
+        </div>
+
+        <!-- Body -->
+        <div id="chat-messages" class="h-80 bg-[#E5DDD5] p-4 overflow-y-auto space-y-4 flex flex-col">
+            <!-- Bot Message -->
+            <div class="bg-white p-3 rounded-lg rounded-tl-none max-w-[80%] shadow-sm self-start text-sm text-gray-800">
+                Mwbwanji! Welcome to the Tobacco Board of Zambia (TBZ). 👋 <br><br>
+                How can I help you today?
+            </div>
+            <!-- Options -->
+            <div class="flex flex-wrap gap-2">
+                <button onclick="sendQuickReply('Check Prices')"
+                    class="px-3 py-1.5 bg-white border border-[#128C7E] text-[#128C7E] text-xs font-bold rounded-full hover:bg-[#128C7E] hover:text-white transition">Check
+                    Prices</button>
+                <button onclick="sendQuickReply('Get License')"
+                    class="px-3 py-1.5 bg-white border border-[#128C7E] text-[#128C7E] text-xs font-bold rounded-full hover:bg-[#128C7E] hover:text-white transition">Get
+                    License</button>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div class="p-3 bg-white border-t border-gray-100 flex gap-2">
+            <input type="text" id="chat-input"
+                class="flex-grow bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#128C7E]"
+                placeholder="Type a message...">
+            <button onclick="sendMessage()"
+                class="w-10 h-10 bg-[#128C7E] rounded-full flex items-center justify-center text-white hover:bg-[#075E54] transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- CHAT SCRIPT -->
+    <script>
+        function toggleChat() {
+            const chat = document.getElementById('chat-window');
+            chat.classList.toggle('hidden');
+            if (!chat.classList.contains('hidden')) {
+                setTimeout(() => {
+                    chat.classList.remove('scale-95', 'opacity-0');
+                    chat.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                chat.classList.remove('scale-100', 'opacity-100');
+                chat.classList.add('scale-95', 'opacity-0');
+            }
+        }
+
+        const responses = {
+            "price": "The current floor price for Virginia Flue-Cured is **$3.45/kg** (Up 2% from yesterday).",
+            "license": "Registration for 2025 is OPEN. Click 'Get Licensed' on the website to start.",
+            "hello": "Hello! Need help with Licensing or Prices?",
+            "thanks": "You're welcome! Stay productive.",
+            "default": "I can help with **Prices**, **Licensing**, or **Compliance**. What do you need?"
+        };
+
+        function addMessage(text, isUser = false) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = isUser
+                ? "bg-[#dcf8c6] p-3 rounded-lg rounded-tr-none max-w-[80%] shadow-sm self-end text-sm text-gray-800"
+                : "bg-white p-3 rounded-lg rounded-tl-none max-w-[80%] shadow-sm self-start text-sm text-gray-800";
+            div.innerHTML = text; // Allow HTML for bolding
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendQuickReply(text) {
+            addMessage(text, true);
+            setTimeout(() => {
+                const key = text.toLowerCase().includes('price') ? 'price' : 'license';
+                addMessage(responses[key]);
+            }, 600);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addMessage(text, true);
+            input.value = '';
+
+            setTimeout(() => {
+                let response = responses.default;
+                const lower = text.toLowerCase();
+                if (lower.includes('price') || lower.includes('cost')) response = responses.price;
+                else if (lower.includes('licens') || lower.includes('register')) response = responses.license;
+                else if (lower.includes('hi') || lower.includes('hello')) response = responses.hello;
+                else if (lower.includes('thank')) response = responses.thanks;
+
+                addMessage(response);
+            }, 800);
+        }
+
+        // Enter key support
+        document.getElementById('chat-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+
+</body>
+
+</html>
