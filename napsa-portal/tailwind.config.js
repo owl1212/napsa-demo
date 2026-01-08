@@ -18,61 +18,94 @@ module.exports = {
     },
     extend: {
       colors: {
-        brand: {
-          50: '#fcfdf5',
-          500: '#a3c838', // Legacy support
-        },
-        // ECO-TECH PALETTE
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: '#1A4D2E', // Deep Forest Green
-          light: '#2D5A3D',
-          dark: '#0F2F1B',
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
-        action: {
-          DEFAULT: '#CCFF00', // Electric Lime
-          hover: '#B3E600',
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: '#D4A574', // Harvest Gold
-          light: '#E2BF99',
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
-        surface: {
-          light: '#FAFAF8', // Cream
-          dark: '#1A1A1A',  // Charcoal
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
-        // LOLC Finance Colors
-        'primary-blue': '#004499',
-        'accent-red': '#E30613',
-        'success-green': '#66BB6A',
-        // NAPSA Colors
-        'primary-navy': '#1B254B',
-        'primary-blue': '#111827',
-        'accent-gold': '#F59E0B',
-        'accent-blue': '#2563EB',
-        'bg-gray': '#F8FAFC',
-        'text-dark': '#1F2937',
-        'text-gray': '#6B7280',
-        'border-color': '#E5E7EB',
-      },
-      spacing: {
-        'xs': '4px',
-        'sm': '8px',
-        'md': '16px',
-        'lg': '24px',
-        'xl': '32px',
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        // IPAS Specific System Colors
+        nsps: {
+          blue: {
+            900: '#1e40af', // Primary Brand
+            800: '#1e3a8a', // Darker Blue
+            600: '#2563eb', // Action Blue
+          },
+          orange: {
+            500: '#f97316', // Secondary Brand
+            100: '#ffedd5', // Light Orange
+          },
+          neutral: {
+            50: '#f9fafb',
+            100: '#f3f4f6',
+            200: '#e5e7eb',
+            600: '#4b5563',
+            900: '#111827',
+          },
+          status: {
+            success: {
+              50: '#f0fdf4',
+              600: '#16a34a',
+            },
+            warning: {
+              50: '#fefce8',
+              500: '#eab308',
+            },
+            error: {
+              500: '#ef4444',
+            },
+          }
+        }
       },
       borderRadius: {
-        'pill': '9999px',
-        'card': '24px',
-        'sm': '4px',
-        'md': '6px',
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-      boxShadow: {
-        'slider-thumb': '0 2px 5px rgba(0, 0, 0, 0.2)',
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        sans: ['Inter', 'Roboto', 'Open Sans', 'sans-serif'], // Primary for everything
-        serif: ['Inter', 'Roboto', 'Open Sans', 'sans-serif'], // Override serif usage to enforces sans
+        sans: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
     },
   },

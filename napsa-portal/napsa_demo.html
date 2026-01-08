@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPAS - National Pension Scheme Authority</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- React Router DOM -->
+    <script crossorigin src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Recharts -->
+    <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nsps: {
+                            blue: {
+                                900: '#0a2357',
+                                800: '#143068',
+                                700: '#1e3a8a',
+                                600: '#2563eb',
+                                500: '#3b82f6',
+                                100: '#dbeafe',
+                                50: '#eff6ff',
+                            },
+                            orange: {
+                                600: '#ea580c',
+                                500: '#f97316', // Primary Action
+                                100: '#ffedd5',
+                                50: '#fff7ed',
+                            },
+                            neutral: {
+                                900: '#0f172a',
+                                800: '#1e293b',
+                                600: '#475569',
+                                500: '#64748b',
+                                200: '#e2e8f0',
+                                100: '#f1f5f9',
+                                50: '#f8fafc',
+                            },
+                            green: {
+                                700: '#15803d',
+                                600: '#16a34a', // Success
+                                100: '#dcfce7',
+                                50: '#f0fdf4',
+                            }
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .animate-in {
+                animation: animateIn 0.5s ease-out forwards;
+            }
+            @keyframes animateIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 antialiased font-sans">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { 
+            BrowserRouter, 
+            Routes, 
+            Route, 
+            Link, 
+            NavLink, 
+            Outlet, 
+            useNavigate, 
+            useLocation, 
+            Navigate 
+        } = ReactRouterDOM;
+        const { 
+            AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
+        } = Recharts;
+
+        // --- ICONS (SVG Components) ---
+        const Icon = ({ path, className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                {path}
+            </svg>
+        );
+
+        const Icons = {
+            User: (props) => <Icon {...props} path={<><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></>} />,
+            Lock: (props) => <Icon {...props} path={<><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>} />,
+            ArrowRight: (props) => <Icon {...props} path={<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>} />,
+            ShieldCheck: (props) => <Icon {...props} path={<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></>} />,
+            Building2: (props) => <Icon {...props} path={<><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></>} />,
+            CheckCircle2: (props) => <Icon {...props} path={<><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></>} />,
+            LayoutDashboard: (props) => <Icon {...props} path={<rect width="7" height="9" x="3" y="3" rx="1" /><rect width="7" height="5" x="14" y="3" rx="1" /><rect width="7" height="9" x="14" y="12" rx="1" /><rect width="7" height="5" x="3" y="16" rx="1" />} />,
+            Briefcase: (props) => <Icon {...props} path={<rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />} />,
+            Calculator: (props) => <Icon {...props} path={<rect width="16" height="20" x="4" y="2" rx="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" />} />,
+            History: (props) => <Icon {...props} path={<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12" /><path d="M3 3v9h9" /><path d="M12 7v5l4 2" />} />,
+            FileText: (props) => <Icon {...props} path={<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" />} />,
+            LogOut: (props) => <Icon {...props} path={<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" x2="9" y1="12" y2="12" />} />,
+            TrendingUp: (props) => <Icon {...props} path={<polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" />} />,
+            Wallet: (props) => <Icon {...props} path={<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" /><path d="M3 5v14a2 2 0 0 0 2 2h16v-5" /><path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />} />,
+            Upload: (props) => <Icon {...props} path={<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" x2="12" y1="3" y2="15" />} />,
+            Search: (props) => <Icon {...props} path={<circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" />} />,
+            Calendar: (props) => <Icon {...props} path={<rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" />} />
+        };
+
+        // --- COMPONENTS ---
+
+        // 1. PLACEHOLDER COMPONENT
+        const PlaceholderPage = ({ title, icon: IconComp }) => (
+            <div className="flex flex-col items-center justify-center h-[60vh] text-center p-8 animate-in">
+                <div className="h-20 w-20 bg-nsps-neutral-100 rounded-full flex items-center justify-center mb-6">
+                    {IconComp ? <IconComp className="w-10 h-10 text-nsps-neutral-400" /> : <Icons.Building2 className="w-10 h-10 text-nsps-neutral-400" />}
+                </div>
+                <h2 className="text-2xl font-bold text-nsps-neutral-900">{title}</h2>
+                <p className="text-nsps-neutral-500 mt-2 max-w-md">
+                    This module is currently under active development. Check back soon for the full implementation.
+                </p>
+                <button 
+                  onClick={() => window.history.back()}
+                  className="mt-6 text-nsps-blue-600 hover:text-nsps-blue-800 font-medium"
+                >
+                    Go Back
+                </button>
+            </div>
+        );
+
+        // 2. LOGIN VIEW
+        const LoginView = ({ onLogin }) => {
+            const [userType, setUserType] = useState('member');
+            const [step, setStep] = useState('credentials');
+            const [isLoading, setIsLoading] = useState(false);
+            const [currentSlide, setCurrentSlide] = useState(0);
+
+            const slides = [
+                "Sign in to access your account and manage your services.",
+                "Secure, reliable access to your NAPSA services—anytime.",
+                "Managing your social security made simple and efficient.",
+            ];
+
+            useEffect(() => {
+                const timer = setInterval(() => {
+                    setCurrentSlide((prev) => (prev + 1) % slides.length);
+                }, 4000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setIsLoading(true);
+                setTimeout(() => {
+                    if (step === 'credentials') {
+                        setStep('mfa');
+                        setIsLoading(false);
+                    } else {
+                        onLogin(userType);
+                    }
+                }, 1000);
+            };
+
+            return (
+                <div className="flex min-h-screen bg-nsps-neutral-50 overflow-hidden font-sans">
+                    <div className="w-full lg:w-[480px] bg-white flex flex-col justify-center px-8 lg:px-12 relative z-10 shadow-2xl">
+                        <div className="w-full max-w-sm mx-auto space-y-8">
+                            <div className="text-center space-y-2">
+                                <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-nsps-blue-50 text-nsps-blue-900 mb-4">
+                                    <Icons.ShieldCheck className="w-8 h-8" />
+                                </div>
+                                <h1 className="text-2xl font-bold tracking-tight text-nsps-blue-900">
+                                    {userType === 'member' && 'Member Portal'}
+                                    {userType === 'employer' && 'Employer Portal'}
+                                    {userType === 'admin' && 'Staff Admin Portal'}
+                                </h1>
+                                <p className="text-sm text-nsps-neutral-600">
+                                    {step === 'credentials' ? 'Enter credentials' : 'Verify Identity'}
+                                </p>
+                            </div>
+
+                            {step === 'credentials' && (
+                                <div className="grid grid-cols-3 gap-2 p-1 bg-nsps-neutral-100 rounded-lg">
+                                    {['member', 'employer', 'admin'].map((role) => (
+                                        <button
+                                            key={role}
+                                            onClick={() => setUserType(role)}
+                                            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all capitalize ${
+                                                userType === role ? "bg-white text-nsps-blue-900 shadow-sm" : "text-nsps-neutral-600"
+                                            }`}
+                                        >
+                                            {role}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                {step === 'credentials' ? (
+                                    <>
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-semibold uppercase text-nsps-neutral-600">ID / Account No.</label>
+                                            <div className="relative">
+                                                <Icons.User className="absolute left-3 top-3 h-5 w-5 text-nsps-neutral-400" />
+                                                <input type="text" className="w-full pl-10 pr-4 py-2.5 bg-nsps-neutral-50 border border-nsps-neutral-200 rounded-lg focus:ring-2 focus:ring-nsps-blue-600 outline-none" placeholder="123456/78/1" required />
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-semibold uppercase text-nsps-neutral-600">Password</label>
+                                            <div className="relative">
+                                                <Icons.Lock className="absolute left-3 top-3 h-5 w-5 text-nsps-neutral-400" />
+                                                <input type="password" value="password" readOnly className="w-full pl-10 pr-4 py-2.5 bg-nsps-neutral-50 border border-nsps-neutral-200 rounded-lg focus:ring-2 focus:ring-nsps-blue-600 outline-none" />
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="space-y-2 animate-in">
+                                        <div className="text-center bg-blue-50 p-4 rounded-lg mb-4 text-sm text-blue-800">
+                                            Code sent to **8921
+                                        </div>
+                                        <input type="text" className="w-full text-center tracking-[1em] text-2xl py-3 border border-nsps-neutral-200 rounded-lg font-mono font-bold" placeholder="000000" defaultValue="123456" />
+                                    </div>
+                                )}
+                                <button type="submit" disabled={isLoading} className="w-full flex items-center justify-center gap-2 bg-nsps-orange-500 hover:bg-nsps-orange-600 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-nsps-orange-500/20 active:scale-95">
+                                    {isLoading ? 'Processing...' : (step === 'credentials' ? 'Sign In' : 'Verify & Login')}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {/* Right Side Visual */}
+                    <div className="hidden lg:flex flex-1 relative bg-nsps-blue-900 items-center justify-center overflow-hidden">
+                        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-nsps-blue-800 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/4"></div>
+                        <div className="z-10 text-white text-center">
+                            <div className="h-20 w-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/20 mx-auto mb-8">
+                                <Icons.Building2 className="w-10 h-10 text-white" />
+                            </div>
+                            <p className="text-2xl font-medium max-w-md mx-auto">{slides[currentSlide]}</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // 3. LAYOUTS
+        const SidebarLink = ({ to, icon: Icon, label }) => (
+            <NavLink to={to} className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white'}`}>
+                <Icon className="w-5 h-5" />
+                <span>{label}</span>
+            </NavLink>
+        );
+
+        const PortalLayout = ({ sidebarBg, title, links }) => {
+            const navigate = useNavigate();
+            return (
+                <div className="flex h-screen bg-nsps-neutral-50 overflow-hidden">
+                    <aside className={`w-64 ${sidebarBg} text-white flex flex-col shadow-xl`}>
+                        <div className="p-6 border-b border-white/10">
+                            <div className="flex items-center gap-3">
+                                <div className="h-10 w-10 bg-white/10 rounded-lg flex items-center justify-center text-white"><Icons.Building2 className="w-6 h-6" /></div>
+                                <div><h1 className="font-bold text-lg tracking-tight">IPAS</h1><p className="text-xs opacity-70">{title}</p></div>
+                            </div>
+                        </div>
+                        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+                            {links.map(link => <SidebarLink key={link.to} {...link} />)}
+                        </nav>
+                        <div className="p-4 border-t border-white/10">
+                            <button onClick={() => window.location.reload()} className="flex items-center gap-3 px-4 py-3 w-full text-left text-white/70 hover:bg-white/5 rounded-lg transition-colors">
+                                <Icons.LogOut className="w-5 h-5" /> <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </aside>
+                    <main className="flex-1 overflow-auto">
+                        <header className="bg-white border-b border-nsps-neutral-200 sticky top-0 z-20 px-8 py-4 flex justify-between items-center bg-opacity-90 backdrop-blur-sm">
+                            <h2 className="font-semibold text-nsps-neutral-800">Overview</h2>
+                            <div className="flex items-center gap-4">
+                                <div className="text-right hidden md:block"><p className="text-sm font-bold text-nsps-neutral-900">User Account</p><p className="text-xs text-nsps-neutral-500">{title} User</p></div>
+                                <div className="h-10 w-10 bg-nsps-blue-100 rounded-full flex items-center justify-center text-nsps-blue-700 font-bold border border-nsps-blue-200">JD</div>
+                            </div>
+                        </header>
+                        <div className="p-8 max-w-7xl mx-auto"><Outlet /></div>
+                    </main>
+                </div>
+            );
+        };
+
+        // 4. PAGES
+        const MemberDashboard = () => (
+            <div className="space-y-8 animate-in">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="bg-gradient-to-br from-nsps-blue-900 to-nsps-blue-800 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
+                        <p className="text-nsps-blue-100 font-medium text-sm">Total Pension Fund</p>
+                        <div className="mt-4 flex items-baseline gap-2"><span className="text-4xl font-bold">K 45,231</span><span className="text-xl opacity-80">.00</span></div>
+                        <div className="mt-4 inline-flex items-center gap-1.5 bg-white/10 px-3 py-1 rounded-full text-xs">+12.5% vs last year</div>
+                    </div>
+                    <div className="bg-white rounded-2xl p-6 border border-nsps-neutral-200 shadow-sm"><p className="text-nsps-neutral-600 font-medium text-sm">Projected Benefit</p><p className="text-3xl font-bold text-nsps-blue-900 mt-4">K 128,400</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-nsps-neutral-200 shadow-sm"><p className="text-nsps-neutral-600 font-medium text-sm">Status</p><span className="mt-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-nsps-green-100 text-nsps-green-700">Active Contributing</span></div>
+                </div>
+                <div className="bg-white rounded-2xl shadow-sm border border-nsps-neutral-200 overflow-hidden">
+                    <div className="p-6 border-b border-nsps-neutral-100"><h3 className="font-bold text-nsps-neutral-900">Recent Contributions</h3></div>
+                    {[1,2,3].map(i => (
+                        <div key={i} className="p-4 flex justify-between items-center hover:bg-nsps-neutral-50 border-b last:border-0 border-nsps-neutral-100">
+                            <div className="flex items-center gap-4">
+                                <div className="h-10 w-10 rounded-full bg-nsps-blue-50 flex items-center justify-center text-nsps-blue-600"><Icons.TrendingUp className="w-5 h-5"/></div>
+                                <div><p className="font-bold text-sm text-nsps-neutral-900">Monthly Contribution</p><p className="text-xs text-nsps-neutral-500">Jan 0{i}, 2026</p></div>
+                            </div>
+                            <span className="font-bold text-nsps-blue-900">K 1,250.00</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const MemberCalculator = () => {
+            const [val, setVal] = useState(15000);
+            return (
+                <div className="space-y-6 animate-in">
+                    <h1 className="text-2xl font-bold text-nsps-blue-900">Benefits Estimator</h1>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="bg-white p-6 rounded-xl shadow-sm border border-nsps-neutral-200 space-y-6"> 
+                            <div>
+                                <label className="text-xs font-bold uppercase text-nsps-neutral-500">Monthly Salary: K {val.toLocaleString()}</label>
+                                <input type="range" min="1000" max="50000" value={val} onChange={e=>setVal(Number(e.target.value))} className="w-full mt-2" />
+                            </div>
+                             <div className="bg-blue-50 p-4 rounded text-xs text-blue-800">Estimates are for guidance only.</div>
+                        </div>
+                        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-nsps-neutral-200 flex items-center justify-center min-h-[300px]">
+                            <div className="text-center">
+                                <p className="text-sm text-nsps-neutral-500">projected Lumpsum</p>
+                                <p className="text-5xl font-bold text-nsps-blue-900 mt-2">K {(val * 12 * 20 * 1.5).toLocaleString()}</p>
+                                <p className="text-xs text-nsps-green-600 mt-2 font-bold">+15% Growth Rate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        };
+
+        const EmployerDashboard = () => (
+            <div className="space-y-8 animate-in">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-nsps-neutral-200"><p className="text-sm text-nsps-neutral-500">Active Employees</p><p className="text-3xl font-bold text-nsps-neutral-900 mt-1">1,248</p></div>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-nsps-neutral-200"><p className="text-sm text-nsps-neutral-500">Pending Amount</p><p className="text-3xl font-bold text-nsps-orange-500 mt-1">K 450,290</p></div>
+                    <div className="bg-nsps-blue-900 text-white p-6 rounded-xl shadow-lg"><p className="text-nsps-blue-200 text-sm">Compliance Score</p><p className="text-4xl font-bold mt-2">98%</p></div>
+                </div>
+                 <div className="bg-white p-12 rounded-xl shadow-sm border-2 border-dashed border-nsps-neutral-300 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-nsps-neutral-50 hover:border-nsps-blue-400 transition-all">
+                    <div className="h-16 w-16 bg-nsps-blue-50 rounded-full flex items-center justify-center text-nsps-blue-600 mb-4"><Icons.Upload className="w-8 h-8"/></div>
+                    <h3 className="font-bold text-lg text-nsps-neutral-900">Upload Payroll Return</h3>
+                    <p className="text-nsps-neutral-500 text-sm">Drag and drop CSV or Excel file</p>
+                </div>
+            </div>
+        );
+
+        // 5. APP ROOT
+        const App = () => {
+            const [authed, setAuthed] = useState(false);
+            const [role, setRole] = useState('member');
+
+            const handleLogin = (r) => { setRole(r); setAuthed(true); };
+
+            if (!authed) return <LoginView onLogin={handleLogin} />;
+
+            return (
+                <Routes>
+                    <Route path="/" element={<Navigate to={`/${role}/dashboard`} replace />} />
+                    
+                    <Route path="/member" element={<PortalLayout title="Member Portal" sidebarBg="bg-nsps-blue-900" 
+                        links={[
+                            { to: "dashboard", icon: Icons.LayoutDashboard, label: "Dashboard" },
+                            { to: "profile", icon: Icons.User, label: "My Profile" },
+                            { to: "contributions", icon: Icons.History, label: "Contributions" },
+                            { to: "calculator", icon: Icons.Calculator, label: "Benefits Estimator" },
+                            { to: "claims", icon: Icons.FileText, label: "Claims & Benefits" },
+                        ]} />}>
+                        <Route path="dashboard" element={<MemberDashboard />} />
+                        <Route path="profile" element={<PlaceholderPage title="Member Profile" icon={Icons.User} />} />
+                        <Route path="contributions" element={<PlaceholderPage title="Contribution History" icon={Icons.History} />} />
+                        <Route path="calculator" element={<MemberCalculator />} />
+                        <Route path="claims" element={<PlaceholderPage title="Claims Management" icon={Icons.FileText} />} />
+                    </Route>
+
+                    <Route path="/employer" element={<PortalLayout title="Employer Portal" sidebarBg="bg-slate-900"
+                        links={[
+                            { to: "dashboard", icon: Icons.LayoutDashboard, label: "Overview" },
+                            { to: "employees", icon: Icons.User, label: "Employees" },
+                            { to: "bulk-upload", icon: Icons.Upload, label: "Bulk Upload" },
+                            { to: "compliance", icon: Icons.ShieldCheck, label: "Compliance" },
+                        ]} />}>
+                        <Route path="dashboard" element={<EmployerDashboard />} />
+                        <Route path="employees" element={<PlaceholderPage title="Employee Management" icon={Icons.User} />} />
+                        <Route path="bulk-upload" element={<PlaceholderPage title="Bulk Upload" icon={Icons.Upload} />} />
+                        <Route path="compliance" element={<PlaceholderPage title="Compliance Reports" icon={Icons.ShieldCheck} />} />
+                    </Route>
+
+                    <Route path="/admin" element={<PortalLayout title="Admin Portal" sidebarBg="bg-black"
+                         links={[
+                            { to: "dashboard", icon: Icons.LayoutDashboard, label: "System Overview" },
+                            { to: "members", icon: Icons.User, label: "Member Registry" },
+                            { to: "funds", icon: Icons.Briefcase, label: "Fund Management" },
+                        ]} />}>
+                         <Route path="dashboard" element={<PlaceholderPage title="System Dashboard" icon={Icons.LayoutDashboard} />} />
+                         <Route path="members" element={<PlaceholderPage title="Member Registry" icon={Icons.User} />} />
+                         <Route path="funds" element={<PlaceholderPage title="Fund Management" icon={Icons.Briefcase} />} />
+                    </Route>
+                    
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<BrowserRouter><App /></BrowserRouter>);
+    </script>
+</body>
+</html>

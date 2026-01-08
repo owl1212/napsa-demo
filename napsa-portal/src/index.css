@@ -1,9 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply antialiased;
+    @apply antialiased font-sans text-nsps-neutral-900 bg-nsps-neutral-50;
   }
+}
+
+/* Login Page Styles */
+.login-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login-left {
+    width: 40%;
+    background-color: #1B254B; /* var(--primary-navy) hardcoded or needs definition */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    /* CSS Variables Mapping */
+    --primary-navy: #1B254B;
+    --accent-gold: #F59E0B;
+    --text-dark: #1F2937;
+    --accent-blue: #2563EB;
+}
+
+.login-right {
+    width: 60%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.login-right::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, rgba(27, 37, 75, 0.9), transparent);
+}
+
+.login-overlay-text {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    right: 40px;
+    color: white;
+    z-index: 10;
+    background: rgba(27, 37, 75, 0.85);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.login-card {
+    background-color: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.login-tab-badge {
+    position: absolute;
+    top: -15px;
+    left: 40px;
+    background-color: var(--accent-gold);
+    color: white;
+    padding: 6px 24px;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    user-select: none;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-icon {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--primary-navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: var(--primary-navy);
+    font-size: 20px;
+}
+
+.login-title {
+    color: var(--primary-navy);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-dark);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--text-dark);
+    border-radius: 24px;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: var(--accent-blue);
+}
+
+.login-btn {
+    width: 100%;
+    background-color: var(--accent-gold);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.login-btn:hover {
+    background-color: #D97706;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--text-dark);
+}
+
+.signup-link b {
+    color: var(--accent-gold);
+    cursor: pointer;
+}
+
+.toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.napsa-badge {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    overflow: hidden;
+    border: 4px solid white;
 }
