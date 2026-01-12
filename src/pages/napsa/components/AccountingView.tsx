@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Droplets, TrendingUp, Shield, Receipt } from 'lucide-react';
+import { useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart3, DollarSign, CheckCircle, FileText } from 'lucide-react';
 import JournalEntryModal from './modals/JournalEntryModal';
+import GLAccountModal from './modals/GLAccountModal';
+import BankReconciliationModal from './modals/BankReconciliationModal';
+import PaymentVoucherModal from './modals/PaymentVoucherModal';
+import VendorModal from './modals/VendorModal';
+import InvoiceModal from './modals/InvoiceModal';
+import BankTransferModal from './modals/BankTransferModal';
+import BudgetModal from './modals/BudgetModal';
+import AssetModal from './modals/AssetModal';
+import AssetDisposalModal from './modals/AssetDisposalModal';
+import ReportDrillDownModal from './modals/ReportDrillDownModal';
+import FinancialReportModal from './modals/FinancialReportModal';
+import ForecastModal from './modals/ForecastModal';
+import RevaluationModal from './modals/RevaluationModal';
 
 // Demo version - simplified for showcase
 const AccountingView = ({ view }: { view: string }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
   const [showJournalModal, setShowJournalModal] = useState(false);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+  const [drillDownData, setDrillDownData] = useState({ category: '', amount: '' });
   const [notification, setNotification] = useState('');
+  const [showFinancialReport, setShowFinancialReport] = useState(false);
+  const [reportType, setReportType] = useState('');
+  const [showForecastModal, setShowForecastModal] = useState(false);
+  const [showRevaluationModal, setShowRevaluationModal] = useState(false);
 
   const handleAction = (action: string) => {
     setNotification(`${action} initiated successfully!`);
@@ -22,13 +41,31 @@ const AccountingView = ({ view }: { view: string }) => {
     setTimeout(() => setNotification(''), 3000);
   };
 
+  const handleGenericSubmit = (data: any, type: string) => {
+    console.log(`${type} submitted:`, data);
+    setNotification(`${type} processed successfully!`);
+    setTimeout(() => setNotification(''), 3000);
+  };
+
   const openModal = (type: string) => {
     if (type === 'journal') {
       setShowJournalModal(true);
+    } else if (type === 'forecast') {
+      setShowForecastModal(true);
+    } else if (type === 'revaluation') {
+      setShowRevaluationModal(true);
+    } else if (type === 'report') {
+      setReportType('Balance Sheet');
+      setShowFinancialReport(true);
     } else {
       setModalType(type);
       setShowModal(true);
     }
+  };
+
+  const openDrillDown = (category: string, amount: string) => {
+    setDrillDownData({ category, amount });
+    setShowDrillDown(true);
   };
 
   const getTitle = (view: string) => {
@@ -64,12 +101,6 @@ const AccountingView = ({ view }: { view: string }) => {
     { dept: 'HR', budgeted: 2000000, actual: 1800000 },
   ];
 
-  const commitmentData = [
-    { name: 'Spent', value: 60, color: '#10B981' },
-    { name: 'Committed', value: 25, color: '#F59E0B' },
-    { name: 'Available', value: 15, color: '#EF4444' },
-  ];
-
   const receivablesData = [
     { bucket: 'Current', amount: 2100000 },
     { bucket: '31-60', amount: 890000 },
@@ -90,23 +121,35 @@ const AccountingView = ({ view }: { view: string }) => {
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <div className="text-sm text-gray-600 mb-2">Total Assets</div>
+              <div 
+                onClick={() => openDrillDown('Total Assets', 'K 2.8B')}
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-accent-blue transition-all group"
+              >
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-accent-blue">Total Assets</div>
                 <div className="text-2xl font-bold text-blue-600">K 2.8B</div>
                 <div className="text-xs text-green-600 mt-2">+5.2% from last month</div>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <div className="text-sm text-gray-600 mb-2">Total Liabilities</div>
+              <div 
+                onClick={() => openDrillDown('Total Liabilities', 'K 1.2B')}
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-accent-red transition-all group"
+              >
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-accent-red">Total Liabilities</div>
                 <div className="text-2xl font-bold text-red-600">K 1.2B</div>
                 <div className="text-xs text-red-600 mt-2">-2.1% from last month</div>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <div className="text-sm text-gray-600 mb-2">Net Assets</div>
+              <div 
+                onClick={() => openDrillDown('Net Assets', 'K 1.6B')}
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-green-500 transition-all group"
+              >
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-green-600">Net Assets</div>
                 <div className="text-2xl font-bold text-green-600">K 1.6B</div>
                 <div className="text-xs text-green-600 mt-2">+8.3% from last month</div>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <div className="text-sm text-gray-600 mb-2">Cash Position</div>
+              <div 
+                onClick={() => openDrillDown('Cash Position', 'K 86M')}
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-accent-gold transition-all group"
+              >
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-accent-gold">Cash Position</div>
                 <div className="text-2xl font-bold text-blue-600">K 86M</div>
                 <div className="text-xs text-yellow-600 mt-2">Above buffer</div>
               </div>
@@ -164,19 +207,19 @@ const AccountingView = ({ view }: { view: string }) => {
               <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <button onClick={() => openModal('journal')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2">📊</div>
+                  <div className="text-2xl mb-2 text-gray-600"><BarChart3 size={32} /></div>
                   <div className="text-sm font-medium">New Journal Entry</div>
                 </button>
                 <button onClick={() => openModal('payment')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2">💰</div>
+                  <div className="text-2xl mb-2 text-gray-600"><DollarSign size={32} /></div>
                   <div className="text-sm font-medium">Process Payment</div>
                 </button>
                 <button onClick={() => openModal('reconcile')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2">📈</div>
+                  <div className="text-2xl mb-2 text-gray-600"><CheckCircle size={32} /></div>
                   <div className="text-sm font-medium">Bank Reconciliation</div>
                 </button>
                 <button onClick={() => openModal('report')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2">📋</div>
+                  <div className="text-2xl mb-2 text-gray-600"><FileText size={32} /></div>
                   <div className="text-sm font-medium">Generate Report</div>
                 </button>
               </div>
@@ -519,10 +562,10 @@ const AccountingView = ({ view }: { view: string }) => {
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <h2 className="text-lg font-semibold mb-4">Available Reports</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onClick={() => handleAction('Balance Sheet generated for Dec 31, 2025 - Total Assets: K 2.8B')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold text-left transition-colors">
+                <button onClick={() => openModal('report')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold text-left transition-colors">
                   <div className="font-medium">Balance Sheet</div>
                   <div className="text-sm text-gray-600">As of December 31, 2025</div>
-                  <div className="text-xs text-accent-blue mt-2">Click to generate</div>
+                  <div className="text-xs text-accent-blue mt-2">Click to view PDF</div>
                 </button>
                 <button onClick={() => handleAction('Income Statement generated for Q4 2025 - Net Income: K 125M')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold text-left transition-colors">
                   <div className="font-medium">Income Statement</div>
@@ -578,10 +621,102 @@ const AccountingView = ({ view }: { view: string }) => {
   const renderModal = () => {
     if (!showModal) return null;
 
+    // Specialized Modals
+    if (modalType === 'account') {
+      return (
+        <GLAccountModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'GL Account')} 
+        />
+      );
+    }
+
+    if (modalType === 'reconcile') {
+      return (
+        <BankReconciliationModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Bank Reconciliation')} 
+        />
+      );
+    }
+
+    if (modalType === 'payment') {
+      return (
+        <PaymentVoucherModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Payment Voucher')} 
+        />
+      );
+    }
+
+    if (modalType === 'vendor') {
+      return (
+        <VendorModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Vendor')} 
+        />
+      );
+    }
+
+    if (modalType === 'invoice') {
+      return (
+        <InvoiceModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Invoice')} 
+        />
+      );
+    }
+
+    if (modalType === 'transfer') {
+      return (
+        <BankTransferModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Bank Transfer')} 
+        />
+      );
+    }
+
+    if (modalType === 'budget') {
+      return (
+        <BudgetModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Budget')} 
+        />
+      );
+    }
+
+    if (modalType === 'asset') {
+      return (
+        <AssetModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Fixed Asset')} 
+        />
+      );
+    }
+
+    if (modalType === 'disposal') {
+      return (
+        <AssetDisposalModal 
+          isOpen={showModal} 
+          onClose={() => setShowModal(false)} 
+          onSubmit={(data) => handleGenericSubmit(data, 'Asset Disposal')} 
+        />
+      );
+    }
+
+    // Generic fallback for others
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowModal(false)}>
         <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
-          <h3 className="text-lg font-semibold mb-4">{modalType === 'journal' ? 'New Journal Entry' : modalType === 'payment' ? 'Process Payment' : modalType === 'reconcile' ? 'Bank Reconciliation' : modalType === 'report' ? 'Generate Report' : modalType === 'transfer' ? 'New Transfer' : modalType === 'deposit' ? 'Record Deposit' : modalType === 'withdrawal' ? 'Record Withdrawal' : modalType === 'vendor' ? 'Add Vendor' : modalType === 'invoice' ? 'New Invoice' : modalType === 'budget' ? 'Create Budget' : modalType === 'forecast' ? 'Generate Forecast' : modalType === 'asset' ? 'Register Asset' : modalType === 'disposal' ? 'Asset Disposal' : modalType === 'revaluation' ? 'Schedule Revaluation' : modalType === 'account' ? 'Create Account' : 'Action'}</h3>
+          <h3 className="text-lg font-semibold mb-4">{modalType === 'deposit' ? 'Record Deposit' : modalType === 'withdrawal' ? 'Record Withdrawal' : modalType === 'forecast' ? 'Generate Forecast' : modalType === 'revaluation' ? 'Schedule Revaluation' : 'Action'}</h3>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Description</label>
@@ -590,10 +725,6 @@ const AccountingView = ({ view }: { view: string }) => {
             <div>
               <label className="block text-sm font-medium mb-1">Amount</label>
               <input type="text" className="w-full border rounded px-3 py-2" placeholder="K 0.00" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Date</label>
-              <input type="date" className="w-full border rounded px-3 py-2" />
             </div>
             <div className="flex gap-2 mt-4">
               <button onClick={() => { handleAction(`${modalType.charAt(0).toUpperCase() + modalType.slice(1)} transaction recorded successfully`); setShowModal(false); }} className="flex-1 bg-primary-navy text-white py-2 rounded hover:bg-accent-gold hover:text-primary-navy transition-colors">Submit</button>
@@ -620,6 +751,27 @@ const AccountingView = ({ view }: { view: string }) => {
         isOpen={showJournalModal}
         onClose={() => setShowJournalModal(false)}
         onSubmit={handleJournalEntrySubmit}
+      />
+      <ReportDrillDownModal
+        isOpen={showDrillDown}
+        onClose={() => setShowDrillDown(false)}
+        categoryName={drillDownData.category}
+        totalAmount={drillDownData.amount}
+      />
+      <FinancialReportModal
+        isOpen={showFinancialReport}
+        onClose={() => setShowFinancialReport(false)}
+        reportType={reportType}
+      />
+      <ForecastModal
+        isOpen={showForecastModal}
+        onClose={() => setShowForecastModal(false)}
+        onSubmit={(data) => handleGenericSubmit(data, 'Financial Forecast')}
+      />
+      <RevaluationModal
+        isOpen={showRevaluationModal}
+        onClose={() => setShowRevaluationModal(false)}
+        onSubmit={(data) => handleGenericSubmit(data, 'Asset Revaluation')}
       />
     </div>
   );

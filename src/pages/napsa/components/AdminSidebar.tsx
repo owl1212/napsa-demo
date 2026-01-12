@@ -25,11 +25,19 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
       { id: 'investment_portfolio', label: 'Investment Portfolio Command Center', icon: 'fa-chart-line', section: 'INVESTMENTS' },
       { id: 'equity_book', label: 'Equity Book Dashboard', icon: 'fa-chart-bar', section: 'INVESTMENTS' },
       { id: 'fixed_income', label: 'Fixed Income Dashboard', icon: 'fa-coins', section: 'INVESTMENTS' },
-      { id: 'real_estate_alt', label: 'Real Estate & Alternatives', icon: 'fa-building', section: 'INVESTMENTS' },
+      { id: 'equity_management', label: 'Equity Management', icon: 'fa-chart-line', section: 'INVESTMENTS' },
+      { id: 'bond_management', label: 'Bond Management', icon: 'fa-coins', section: 'INVESTMENTS' },
+      { id: 'real_estate_alt', label: 'Real Estate Alternatives', icon: 'fa-city', section: 'INVESTMENTS' },
       { id: 'pension_payroll', label: 'Pension Payroll', icon: 'fa-money-check-dollar', section: 'OPERATIONS' },
       { id: 'member_admin', label: 'Member Admin', icon: 'fa-users-gear', section: 'OPERATIONS' },
       { id: 'contribution_mgmt', label: 'Contribution Mgmt', icon: 'fa-hand-holding-dollar', section: 'OPERATIONS' },
+      { id: 'contributions', label: 'Member Contributions', icon: 'fa-file-invoice-dollar', section: 'OPERATIONS' },
+      { id: 'benefits', label: 'Benefits Management', icon: 'fa-gift', section: 'OPERATIONS' },
+      { id: 'kyc', label: 'KYC Management', icon: 'fa-user-check', section: 'OPERATIONS' },
       { id: 'real_estate', label: 'Real Estate', icon: 'fa-building', section: 'OPERATIONS' },
+      { id: 'property_management', label: 'Property Management', icon: 'fa-home', section: 'OPERATIONS' },
+      { id: 'lease_management', label: 'Lease Management', icon: 'fa-file-contract', section: 'OPERATIONS' },
+      { id: 'maintenance', label: 'Maintenance', icon: 'fa-tools', section: 'OPERATIONS' },
       { id: 'actuarial', label: 'Actuarial & Sustainability', icon: 'fa-chart-line', section: 'ANALYTICS' },
       { id: 'employer_accounts', label: 'Employer Accounts', icon: 'fa-briefcase', section: 'ANALYTICS' },
       { id: 'web_portal', label: 'Web Portal Services', icon: 'fa-globe', section: 'SYSTEM' },
@@ -40,7 +48,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
       case 'ADMIN':
         return allItems; // Admin sees everything
       case 'REAL_ESTATE':
-        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'real_estate');
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'real_estate' || item.id === 'property_management' || item.id === 'lease_management' || item.id === 'maintenance');
       case 'ACTUARIAL':
         return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'actuarial');
       case 'FINANCE':
@@ -57,9 +65,9 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
           item.id === 'financial_reports')
         );
       case 'INVESTMENT':
-        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'fund_mgmt' || item.id === 'investment_portfolio' || item.id === 'equity_book' || item.id === 'fixed_income' || item.id === 'real_estate_alt');
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'fund_mgmt' || item.id === 'investment_portfolio' || item.id === 'equity_book' || item.id === 'fixed_income' || item.id === 'real_estate_alt' || item.id === 'bond_management' || item.id === 'equity_management');
       case 'OPERATIONS':
-        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'pension_operations' || item.id === 'contribution_mgmt');
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'pension_operations' || item.id === 'contribution_mgmt' || item.id === 'contributions' || item.id === 'benefits' || item.id === 'kyc' || item.id === 'member_admin' || item.id === 'pension_payroll');
       case 'MEMBER_SERVICES':
         return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'web_portal');
       default:

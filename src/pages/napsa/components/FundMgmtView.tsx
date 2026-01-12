@@ -1,4 +1,5 @@
 import React from 'react';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 interface Fund {
   name: string;
@@ -39,6 +40,51 @@ const FundMgmtView: React.FC = () => {
 
   const totalKwacha = funds.reduce((sum, fund) => sum + fund.marketValue, 0);
   const totalUSD = usdFunds.reduce((sum, fund) => sum + fund.marketValue, 0);
+
+  // Chart data
+  const assetAllocationData = [
+    { name: 'Equities', value: 35.2, color: '#1e3a5f' },
+    { name: 'Bonds & Securities', value: 28.7, color: '#f9a825' },
+    { name: 'Property Investment', value: 18.9, color: '#4ba3e5' },
+    { name: 'Fixed Deposits', value: 12.3, color: '#7ed321' },
+    { name: 'Other Investments', value: 4.9, color: '#e8534a' },
+  ];
+
+  const ytmCurveData = [
+    { maturity: '3M', yield: 8.2 },
+    { maturity: '6M', yield: 8.5 },
+    { maturity: '1Y', yield: 8.8 },
+    { maturity: '2Y', yield: 9.1 },
+    { maturity: '3Y', yield: 9.4 },
+    { maturity: '5Y', yield: 9.8 },
+    { maturity: '7Y', yield: 10.2 },
+    { maturity: '10Y', yield: 10.5 },
+  ];
+
+  const propertyData = [
+    { name: 'Office Buildings', value: 45.2 },
+    { name: 'Retail Spaces', value: 32.1 },
+    { name: 'Residential', value: 15.8 },
+    { name: 'Industrial', value: 6.9 },
+  ];
+
+  const kwachaMaturitiesData = [
+    { month: 'Jan', property: 120, equity: 85, bonds: 95, fixed: 45, deposits: 25 },
+    { month: 'Feb', property: 135, equity: 92, bonds: 88, fixed: 52, deposits: 28 },
+    { month: 'Mar', property: 148, equity: 78, bonds: 102, fixed: 48, deposits: 32 },
+    { month: 'Apr', property: 156, equity: 105, bonds: 95, fixed: 55, deposits: 29 },
+    { month: 'May', property: 142, equity: 98, bonds: 108, fixed: 51, deposits: 31 },
+    { month: 'Jun', property: 165, equity: 112, bonds: 115, fixed: 58, deposits: 35 },
+  ];
+
+  const usdMaturitiesData = [
+    { month: 'Jan', highYield: 8.5, usdFund: 12.2, offshore: 5.8, private: 3.2 },
+    { month: 'Feb', highYield: 9.1, usdFund: 11.8, offshore: 6.2, private: 3.8 },
+    { month: 'Mar', highYield: 7.8, usdFund: 13.5, offshore: 5.5, private: 4.1 },
+    { month: 'Apr', highYield: 10.2, usdFund: 12.8, offshore: 6.8, private: 3.5 },
+    { month: 'May', highYield: 8.9, usdFund: 14.1, offshore: 5.9, private: 4.2 },
+    { month: 'Jun', highYield: 9.5, usdFund: 13.2, offshore: 7.1, private: 3.9 },
+  ];
 
   const kwachaLegend: LegendItem[] = [
     { color: '#1e3a5f', label: 'Property Investment' },
@@ -114,8 +160,25 @@ const FundMgmtView: React.FC = () => {
               <span className="font-medium">4.9%</span>
             </div>
           </div>
-          <div className="mt-6 h-[200px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-sm">
-            Interactive Pie Chart Visualization
+          <div className="mt-6">
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart>
+                <Pie
+                  data={assetAllocationData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={40}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {assetAllocationData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => [`${value}%`, 'Allocation']} />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -213,8 +276,16 @@ const FundMgmtView: React.FC = () => {
               <span className="font-medium">K 2.1M</span>
             </div>
           </div>
-          <div className="mt-4 h-[120px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
-            YTM Curve Chart
+          <div className="mt-4">
+            <ResponsiveContainer width="100%" height={120}>
+              <LineChart data={ytmCurveData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="maturity" />
+                <YAxis domain={[7, 11]} />
+                <Tooltip formatter={(value) => [`${value}%`, 'YTM']} />
+                <Line type="monotone" dataKey="yield" stroke="#f9a825" strokeWidth={2} dot={{ fill: '#f9a825' }} />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -234,8 +305,16 @@ const FundMgmtView: React.FC = () => {
               <span className="font-medium">K 2.8M</span>
             </div>
           </div>
-          <div className="mt-4 h-[120px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
-            Property Map View
+          <div className="mt-4">
+            <ResponsiveContainer width="100%" height={120}>
+              <BarChart data={propertyData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip formatter={(value) => [`K ${value}M`, 'Value']} />
+                <Bar dataKey="value" fill="#4ba3e5" />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
@@ -379,8 +458,20 @@ const FundMgmtView: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className="h-[200px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
-            Chart visualization area
+          <div className="h-[200px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={kwachaMaturitiesData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip formatter={(value) => [`K ${value}M`, '']} />
+                <Bar dataKey="property" stackId="a" fill="#1e3a5f" />
+                <Bar dataKey="equity" stackId="a" fill="#f9a825" />
+                <Bar dataKey="bonds" stackId="a" fill="#4ba3e5" />
+                <Bar dataKey="fixed" stackId="a" fill="#7ed321" />
+                <Bar dataKey="deposits" stackId="a" fill="#e8534a" />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -399,8 +490,19 @@ const FundMgmtView: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className="h-[200px] bg-gradient-to-br from-gray-50 to-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
-            Chart visualization area
+          <div className="h-[200px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={usdMaturitiesData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip formatter={(value) => [`$ ${value}M`, '']} />
+                <Bar dataKey="highYield" stackId="a" fill="#16a34a" />
+                <Bar dataKey="usdFund" stackId="a" fill="#0891b2" />
+                <Bar dataKey="offshore" stackId="a" fill="#e8534a" />
+                <Bar dataKey="private" stackId="a" fill="#f9a825" />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>

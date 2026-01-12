@@ -19,9 +19,9 @@ const Header: React.FC = () => {
   return (
     <div className="h-16 bg-white border-b border-border-color px-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <button className="p-2 border-none bg-transparent cursor-pointer">
+        {/* <button className="p-2 border-none bg-transparent cursor-pointer">
           <i className="fa-solid fa-bars"></i>
-        </button>
+        </button> */}
         <div className="w-8 h-8 bg-primary-navy rounded"></div>
         <div className="flex gap-4">
           <div className="flex items-center gap-2 cursor-pointer">
@@ -37,21 +37,21 @@ const Header: React.FC = () => {
 
       <div className="flex items-center gap-4">
         {/* Role Badge */}
-        <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
+        {/* <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
           user?.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
         }`}>
           {user?.role === 'ADMIN' ? 'Admin' : 'Employee'}
-        </div>
+        </div> */}
         
         {/* Role Switcher for Demo */}
-        <button 
+        {/* <button 
           onClick={handleRoleSwitch}
           className="px-3 py-1 border border-gray-300 rounded text-xs hover:bg-gray-50 transition-colors"
           title="Switch role (Demo)"
         >
           <i className="fa-solid fa-arrows-rotate mr-1"></i>
           Switch Role
-        </button>
+        </button> */}
 
         <div className="text-sm">{user?.name || 'User'}</div>
         <button className="p-2 border border-border-color rounded cursor-pointer">

@@ -24,6 +24,9 @@ import InvestmentPortfolioCommandCenter from './napsa/components/InvestmentPortf
 import EquityBookDashboard from './napsa/components/EquityBookDashboard';
 import FixedIncomeDashboard from './napsa/components/FixedIncomeDashboard';
 import RealEstateAlternativesDashboard from './napsa/components/RealEstateAlternativesDashboard';
+import BondManagement from './napsa/components/BondManagement';
+import EquityManagement from './napsa/components/EquityManagement';
+import PlaceholderView from './napsa/components/PlaceholderView';
 
 const NapsaPrototype: React.FC = () => {
   const { user } = useAuth();
@@ -70,6 +73,9 @@ const NapsaPrototype: React.FC = () => {
         case 'pension_payroll': return <PensionPayrollView />;
         case 'member_admin': return <MemberAdminView />;
         case 'contribution_mgmt': return <ContributionMgmtView />;
+        case 'contributions': return <ContributionsView />;
+        case 'benefits': return <BenefitsView />;
+        case 'kyc': return <KYCView />;
         case 'web_portal': return <WebPortalView />;
         case 'employer_accounts': return <EmployerAccountsView />;
         case 'audit_trail': return <AuditTrailView />;
@@ -80,6 +86,11 @@ const NapsaPrototype: React.FC = () => {
         case 'equity_book': return <EquityBookDashboard />;
         case 'fixed_income': return <FixedIncomeDashboard />;
         case 'real_estate_alt': return <RealEstateAlternativesDashboard />;
+        case 'bond_management': return <BondManagement />;
+        case 'equity_management': return <EquityManagement />;
+        case 'compliance_audit': return <PlaceholderView title="Compliance & Audit" description="Comprehensive compliance monitoring and audit management system for regulatory adherence and internal controls." />;
+        case 'risk_management': return <PlaceholderView title="Risk Management" description="Advanced risk assessment and management tools for pension fund operations and investment strategies." />;
+        case 'regulatory_reporting': return <PlaceholderView title="Regulatory Reporting" description="Automated regulatory reporting system ensuring timely and accurate submissions to pension authorities." />;
         default: return <AdminDashboardView />;
       }
     }
