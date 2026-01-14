@@ -7,6 +7,7 @@ import DashboardView from './napsa/components/DashboardView';
 import AdminDashboardView from './napsa/components/AdminDashboardView';
 import AccountingView from './napsa/components/AccountingView';
 import FundMgmtView from './napsa/components/FundMgmtView';
+import StakeholderMgmtView from './napsa/components/StakeholderMgmtView';
 import PensionPayrollView from './napsa/components/PensionPayrollView';
 import MemberAdminView from './napsa/components/MemberAdminView';
 import ContributionMgmtView from './napsa/components/ContributionMgmtView';
@@ -19,6 +20,10 @@ import EmployerAccountsView from './napsa/components/EmployerAccountsView';
 import AuditTrailView from './napsa/components/AuditTrailView';
 import RealEstateView from './napsa/components/RealEstateView';
 import ActuarialView from './napsa/components/ActuarialView';
+import ValuationDashboard from './napsa/components/ValuationDashboard';
+import RiskAnalysisView from './napsa/components/RiskAnalysisView';
+import ContributionsBenefitsView from './napsa/components/ContributionsBenefitsView';
+import DataComplianceView from './napsa/components/DataComplianceView';
 import PensionOperationsCommandCenter from './napsa/components/PensionOperationsCommandCenter';
 import InvestmentPortfolioCommandCenter from './napsa/components/InvestmentPortfolioCommandCenter';
 import EquityBookDashboard from './napsa/components/EquityBookDashboard';
@@ -27,6 +32,7 @@ import RealEstateAlternativesDashboard from './napsa/components/RealEstateAltern
 import BondManagement from './napsa/components/BondManagement';
 import EquityManagement from './napsa/components/EquityManagement';
 import PlaceholderView from './napsa/components/PlaceholderView';
+import PropertyManagementView from './napsa/components/PropertyManagementView';
 
 const NapsaPrototype: React.FC = () => {
   const { user } = useAuth();
@@ -70,6 +76,7 @@ const NapsaPrototype: React.FC = () => {
         case 'fixed_assets': return <AccountingView view={view} />;
         case 'financial_reports': return <AccountingView view={view} />;
         case 'fund_mgmt': return <FundMgmtView />;
+        case 'stakeholder_mgmt': return <StakeholderMgmtView />;
         case 'pension_payroll': return <PensionPayrollView />;
         case 'member_admin': return <MemberAdminView />;
         case 'contribution_mgmt': return <ContributionMgmtView />;
@@ -80,7 +87,12 @@ const NapsaPrototype: React.FC = () => {
         case 'employer_accounts': return <EmployerAccountsView />;
         case 'audit_trail': return <AuditTrailView />;
         case 'real_estate': return <RealEstateView />;
+        case 'property_management': return <PropertyManagementView />;
         case 'actuarial': return <ActuarialView />;
+        case 'actuarial_valuation': return <ValuationDashboard />;
+        case 'actuarial_risk': return <RiskAnalysisView />;
+        case 'actuarial_contributions': return <ContributionsBenefitsView />;
+        case 'actuarial_compliance': return <DataComplianceView />;
         case 'pension_operations': return <PensionOperationsCommandCenter />;
         case 'investment_portfolio': return <InvestmentPortfolioCommandCenter />;
         case 'equity_book': return <EquityBookDashboard />;

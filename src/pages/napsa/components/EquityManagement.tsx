@@ -212,10 +212,7 @@ const EquityManagement: React.FC = () => {
                           ZMW {(holding.unrealizedGain / 1000000).toFixed(1)}M
                         </td>
                         <td className="text-center p-3">
-                          <button className="text-blue-600 hover:text-blue-800 mr-2">View</button>
-                          <button className="text-green-600 hover:text-green-800 mr-2">Buy</button>
-                          <button className="text-red-600 hover:text-red-800">Sell</button>
-                        </td>
+                          <button className="text-blue-600 hover:text-blue-800 mr-2">View</button>                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -226,7 +223,7 @@ const EquityManagement: React.FC = () => {
 
           {activeTab === 'analytics' && (
             <div>
-              <h2 className="text-xl font-semibold mb-4">Performance Analytics</h2>
+              <h2 className="text-xl font-semibold mb-4">Equity Valuation</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-semibold mb-3">Sector Allocation</h3>

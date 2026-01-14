@@ -259,6 +259,8 @@ const BondManagement: React.FC = () => {
   const averageYield = bonds.reduce((sum, bond) => sum + (bond.yield * bond.marketValue), 0) / totalPortfolioValue;
   const averageDuration = bonds.reduce((sum, bond) => sum + (bond.duration * bond.marketValue), 0) / totalPortfolioValue;
 
+  const totalAnnualCouponIncome = bonds.reduce((sum, bond) => sum + (bond.faceValue * bond.coupon / 100), 0);
+
   // Chart data
   const creditQualityData = [
     { name: 'AAA', value: bonds.filter(b => b.creditRating === 'AAA').reduce((sum, b) => sum + b.marketValue, 0), color: '#10B981' },
@@ -374,16 +376,7 @@ const BondManagement: React.FC = () => {
             >
               Maturity Schedule
             </button>
-            <button
-              onClick={() => setActiveTab('analytics')}
-              className={`px-6 py-3 text-sm font-medium ${
-                activeTab === 'analytics'
-                  ? 'border-b-2 border-blue-500 text-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Risk Analytics
-            </button>
+          
             <button
               onClick={() => setActiveTab('trading')}
               className={`px-6 py-3 text-sm font-medium ${
@@ -394,6 +387,16 @@ const BondManagement: React.FC = () => {
             >
               Trading
             </button>
+            <button
+              onClick={() => setActiveTab('coupons')}
+              className={`px-6 py-3 text-sm font-medium ${
+                activeTab === 'coupons'
+                  ? 'border-b-2 border-blue-500 text-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Coupon Management
+            </button>
           </nav>
         </div>
 
@@ -401,7 +404,7 @@ const BondManagement: React.FC = () => {
           {activeTab === 'portfolio' && (
             <div className="space-y-6">
               {/* Portfolio Summary Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                   <div className="flex items-center justify-between">
                     <div>
@@ -438,7 +441,7 @@ const BondManagement: React.FC = () => {
                     <Clock className="w-8 h-8 text-green-600" />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Bond Holdings Table */}
               <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -562,11 +565,8 @@ const BondManagement: React.FC = () => {
                         </div>
                       </div>
                       <div className="mt-3 flex space-x-2">
-                        <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600">
-                          Roll Over
-                        </button>
                         <button className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600">
-                          Sell at Maturity
+                          Liquidate
                         </button>
                         <button className="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
                           Set Reminder
@@ -1063,6 +1063,82 @@ const BondManagement: React.FC = () => {
           </div>
         </div>
       )}
+          {activeTab === 'coupons' && (
+            <div>
+              <h2 className="text-xl font-semibold mb-4">Coupon Management</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h3 className="font-semibold mb-3">Upcoming Coupons</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-2 bg-white rounded">
+                      <div>
+                        <div className="font-medium">Government Bond 2025A</div>
+                        <div className="text-sm text-gray-600">Payment Date: Jan 15, 2026</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold">ZMW 6,250,000</div>
+                        <div className="text-sm text-gray-600">semi-annual</div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center p-2 bg-white rounded">
+                      <div>
+                        <div className="font-medium">Government Bond 2027B</div>
+                        <div className="text-sm text-gray-600">Payment Date: Jan 20, 2026</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold">ZMW 5,900,000</div>
+                        <div className="text-sm text-gray-600">semi-annual</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h3 className="font-semibold mb-3">Coupon History</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Total YTD Coupons</span>
+                      <span className="font-semibold text-green-600">ZMW 45.2M</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Coupon Yield</span>
+                      <span className="font-semibold">12.1%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Reinvestment Rate</span>
+                      <span className="font-semibold">90%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white border rounded-lg p-4">
+                <h3 className="font-semibold mb-3">Coupon Reinvestment Preferences</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Default Action</label>
+                    <select className="block w-full border-gray-300 rounded-md shadow-sm">
+                      <option>Reinvest Automatically</option>
+                      <option>Deposit to Cash Account</option>
+                      <option>Manual Decision</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tax Withholding</label>
+                    <select className="block w-full border-gray-300 rounded-md shadow-sm">
+                      <option>Automatic (15%)</option>
+                      <option>Manual Entry</option>
+                      <option>No Withholding</option>
+                    </select>
+                  </div>
+                  <div className="flex items-end">
+                    <button className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                      Update Preferences
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
     </div>
   );
 };

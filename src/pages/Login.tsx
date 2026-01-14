@@ -217,7 +217,7 @@ const Login: React.FC = () => {
           </form>
 
           {/* Demo Quick Login */}
-          <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #E5E7EB' }}>
+                <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #E5E7EB' }}>
             <p style={{ textAlign: 'center', fontSize: '11px', color: '#6B7280', marginBottom: '12px', fontWeight: 600 }}>
               DEMO DASHBOARD LOGIN
             </p>
@@ -378,14 +378,14 @@ const Login: React.FC = () => {
           </div>
 
           {/* Sign up link */}
-          <div style={{
+        {/*  <div style={{
             textAlign: 'center',
             marginTop: '24px',
             fontSize: '12px',
             color: '#2D3748'
           }}>
             Don't have an account ? <b style={{ color: '#F59E0B', cursor: 'pointer' }}>Sign up now .</b>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -394,7 +394,7 @@ const Login: React.FC = () => {
         width: '60%',
         backgroundImage: 'url(/images/african-american-business-woman-with-laptop%201.jpg)',
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: 'center', 
         position: 'relative'
       }}>
         {/* Gradient Overlay */}

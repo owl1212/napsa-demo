@@ -22,6 +22,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
       { id: 'fixed_assets', label: 'Fixed Assets', icon: 'fa-building', section: 'OPERATIONS' },
       { id: 'financial_reports', label: 'Financial Reports', icon: 'fa-file-alt', section: 'OPERATIONS' },
       { id: 'fund_mgmt', label: 'Fund Management', icon: 'fa-chart-pie', section: 'OPERATIONS' },
+      { id: 'stakeholder_mgmt', label: 'Stakeholder Management', icon: 'fa-users', section: 'OPERATIONS' },
       { id: 'investment_portfolio', label: 'Investment Portfolio Command Center', icon: 'fa-chart-line', section: 'INVESTMENTS' },
       { id: 'equity_book', label: 'Equity Book Dashboard', icon: 'fa-chart-bar', section: 'INVESTMENTS' },
       { id: 'fixed_income', label: 'Fixed Income Dashboard', icon: 'fa-coins', section: 'INVESTMENTS' },
@@ -36,10 +37,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
       { id: 'kyc', label: 'KYC Management', icon: 'fa-user-check', section: 'OPERATIONS' },
       { id: 'real_estate', label: 'Real Estate', icon: 'fa-building', section: 'OPERATIONS' },
       { id: 'property_management', label: 'Property Management', icon: 'fa-home', section: 'OPERATIONS' },
-      { id: 'lease_management', label: 'Lease Management', icon: 'fa-file-contract', section: 'OPERATIONS' },
-      { id: 'maintenance', label: 'Maintenance', icon: 'fa-tools', section: 'OPERATIONS' },
+      // { id: 'lease_management', label: 'Lease Management', icon: 'fa-file-contract', section: 'OPERATIONS' },
+      // { id: 'maintenance', label: 'Maintenance', icon: 'fa-tools', section: 'OPERATIONS' },
       { id: 'actuarial', label: 'Actuarial & Sustainability', icon: 'fa-chart-line', section: 'ANALYTICS' },
-      { id: 'employer_accounts', label: 'Employer Accounts', icon: 'fa-briefcase', section: 'ANALYTICS' },
+      { id: 'actuarial_valuation', label: 'Valuation Dashboard', icon: 'fa-calculator', section: 'ANALYTICS' },
+      { id: 'actuarial_risk', label: 'Risk Analysis', icon: 'fa-exclamation-triangle', section: 'ANALYTICS' },
+      { id: 'actuarial_contributions', label: 'Contributions & Benefits', icon: 'fa-hand-holding-dollar', section: 'ANALYTICS' },
+      { id: 'actuarial_compliance', label: 'Data & Compliance', icon: 'fa-clipboard-check', section: 'ANALYTICS' },
       { id: 'web_portal', label: 'Web Portal Services', icon: 'fa-globe', section: 'SYSTEM' },
       { id: 'audit_trail', label: 'Audit Trail', icon: 'fa-clipboard-list', section: 'SYSTEM' },
     ];
@@ -50,7 +54,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
       case 'REAL_ESTATE':
         return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'real_estate' || item.id === 'property_management' || item.id === 'lease_management' || item.id === 'maintenance');
       case 'ACTUARIAL':
-        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'actuarial');
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'actuarial' || item.id === 'actuarial_valuation' || item.id === 'actuarial_risk' || item.id === 'actuarial_contributions' || item.id === 'actuarial_compliance');
       case 'FINANCE':
         return allItems.filter(item => 
           item.id !== 'admin_dashboard' &&
@@ -65,7 +69,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
           item.id === 'financial_reports')
         );
       case 'INVESTMENT':
-        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'fund_mgmt' || item.id === 'investment_portfolio' || item.id === 'equity_book' || item.id === 'fixed_income' || item.id === 'real_estate_alt' || item.id === 'bond_management' || item.id === 'equity_management');
+        return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'fund_mgmt' || item.id === 'stakeholder_mgmt' || item.id === 'investment_portfolio' || item.id === 'equity_book' || item.id === 'fixed_income' || item.id === 'real_estate_alt' || item.id === 'bond_management' || item.id === 'equity_management');
       case 'OPERATIONS':
         return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'pension_operations' || item.id === 'contribution_mgmt' || item.id === 'contributions' || item.id === 'benefits' || item.id === 'kyc' || item.id === 'member_admin' || item.id === 'pension_payroll');
       case 'MEMBER_SERVICES':
