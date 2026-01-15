@@ -238,7 +238,7 @@ const InvestmentPortfolioCommandCenter: React.FC = () => {
         </div>
 
         {/* Real Estate & Alternatives */}
-        <div className="bg-white rounded-lg shadow p-6">
+        {/* <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-xl font-bold mb-4">Real Estate & Alternatives</h3>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -269,11 +269,11 @@ const InvestmentPortfolioCommandCenter: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* C. EXECUTION & COMPLIANCE */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-xl font-bold mb-4">Investment Action Pipeline</h3>
           <div className="space-y-2">
@@ -309,7 +309,7 @@ const InvestmentPortfolioCommandCenter: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* D. RISK ANALYTICS & REPORTING */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

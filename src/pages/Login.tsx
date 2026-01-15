@@ -217,7 +217,7 @@ const Login: React.FC = () => {
           </form>
 
           {/* Demo Quick Login */}
-                <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #E5E7EB' }}>
+                {/* <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #E5E7EB' }}>
             <p style={{ textAlign: 'center', fontSize: '11px', color: '#6B7280', marginBottom: '12px', fontWeight: 600 }}>
               DEMO DASHBOARD LOGIN
             </p>
@@ -375,7 +375,7 @@ const Login: React.FC = () => {
                 Member Portal
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Sign up link */}
         {/*  <div style={{

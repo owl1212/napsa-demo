@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { BarChart3, DollarSign, CheckCircle, FileText } from 'lucide-react';
+import { BarChart3, DollarSign, CheckCircle, FileText, TrendingUp, TrendingDown, Building, AlertTriangle, PieChart, Calendar, Users, Target } from 'lucide-react';
 import JournalEntryModal from './modals/JournalEntryModal';
 import GLAccountModal from './modals/GLAccountModal';
 import BankReconciliationModal from './modals/BankReconciliationModal';
@@ -119,108 +119,159 @@ const AccountingView = ({ view }: { view: string }) => {
     switch (view) {
       case 'accounting':
         return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="space-y-8">
+            {/* Key Metrics Dashboard */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div 
                 onClick={() => openDrillDown('Total Assets', 'K 2.8B')}
-                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-accent-blue transition-all group"
+                className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 shadow-sm border border-blue-200 cursor-pointer hover:shadow-md hover:scale-105 transition-all duration-200 group"
               >
-                <div className="text-sm text-gray-600 mb-2 group-hover:text-accent-blue">Total Assets</div>
-                <div className="text-2xl font-bold text-blue-600">K 2.8B</div>
-                <div className="text-xs text-green-600 mt-2">+5.2% from last month</div>
+                <div className="flex items-center justify-between mb-4">
+                  <Building className="w-8 h-8 text-blue-600" />
+                  <TrendingUp className="w-5 h-5 text-green-600" />
+                </div>
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-blue-700">Total Assets</div>
+                <div className="text-3xl font-bold text-blue-700">K 2.8B</div>
+                <div className="text-sm text-green-600 mt-2 flex items-center">
+                  <TrendingUp className="w-4 h-4 mr-1" />
+                  +5.2% from last month
+                </div>
               </div>
               <div 
                 onClick={() => openDrillDown('Total Liabilities', 'K 1.2B')}
-                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-accent-red transition-all group"
+                className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 shadow-sm border border-red-200 cursor-pointer hover:shadow-md hover:scale-105 transition-all duration-200 group"
               >
-                <div className="text-sm text-gray-600 mb-2 group-hover:text-accent-red">Total Liabilities</div>
-                <div className="text-2xl font-bold text-red-600">K 1.2B</div>
-                <div className="text-xs text-red-600 mt-2">-2.1% from last month</div>
+                <div className="flex items-center justify-between mb-4">
+                  <AlertTriangle className="w-8 h-8 text-red-600" />
+                  <TrendingDown className="w-5 h-5 text-red-600" />
+                </div>
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-red-700">Total Liabilities</div>
+                <div className="text-3xl font-bold text-red-700">K 1.2B</div>
+                <div className="text-sm text-red-600 mt-2 flex items-center">
+                  <TrendingDown className="w-4 h-4 mr-1" />
+                  -2.1% from last month
+                </div>
               </div>
               <div 
                 onClick={() => openDrillDown('Net Assets', 'K 1.6B')}
-                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-green-500 transition-all group"
+                className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 shadow-sm border border-green-200 cursor-pointer hover:shadow-md hover:scale-105 transition-all duration-200 group"
               >
-                <div className="text-sm text-gray-600 mb-2 group-hover:text-green-600">Net Assets</div>
-                <div className="text-2xl font-bold text-green-600">K 1.6B</div>
-                <div className="text-xs text-green-600 mt-2">+8.3% from last month</div>
+                <div className="flex items-center justify-between mb-4">
+                  <PieChart className="w-8 h-8 text-green-600" />
+                  <TrendingUp className="w-5 h-5 text-green-600" />
+                </div>
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-green-700">Net Assets</div>
+                <div className="text-3xl font-bold text-green-700">K 1.6B</div>
+                <div className="text-sm text-green-600 mt-2 flex items-center">
+                  <TrendingUp className="w-4 h-4 mr-1" />
+                  +8.3% from last month
+                </div>
               </div>
               <div 
                 onClick={() => openDrillDown('Cash Position', 'K 86M')}
-                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer hover:border-accent-gold transition-all group"
+                className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 shadow-sm border border-yellow-200 cursor-pointer hover:shadow-md hover:scale-105 transition-all duration-200 group"
               >
-                <div className="text-sm text-gray-600 mb-2 group-hover:text-accent-gold">Cash Position</div>
-                <div className="text-2xl font-bold text-blue-600">K 86M</div>
-                <div className="text-xs text-yellow-600 mt-2">Above buffer</div>
+                <div className="flex items-center justify-between mb-4">
+                  <DollarSign className="w-8 h-8 text-yellow-600" />
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                </div>
+                <div className="text-sm text-gray-600 mb-2 group-hover:text-yellow-700">Cash Position</div>
+                <div className="text-3xl font-bold text-yellow-700">K 86M</div>
+                <div className="text-sm text-green-600 mt-2">Above buffer</div>
               </div>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <h2 className="text-lg font-semibold mb-4">Key Financial Ratios</h2>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-sm">Current Ratio</span>
-                    <span className="font-medium">2.34</span>
+
+            {/* Financial Health & Activities */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div className="flex items-center mb-6">
+                  <Target className="w-6 h-6 text-blue-600 mr-3" />
+                  <h2 className="text-xl font-semibold text-gray-800">Key Financial Ratios</h2>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">Current Ratio</span>
+                    <span className="font-bold text-blue-600">2.34</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm">Debt-to-Equity</span>
-                    <span className="font-medium">0.75</span>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">Debt-to-Equity</span>
+                    <span className="font-bold text-green-600">0.75</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm">Return on Assets</span>
-                    <span className="font-medium">7.2%</span>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">Return on Assets</span>
+                    <span className="font-bold text-purple-600">7.2%</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm">Liquidity Ratio</span>
-                    <span className="font-medium">1.85</span>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">Liquidity Ratio</span>
+                    <span className="font-bold text-indigo-600">1.85</span>
                   </div>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <h2 className="text-lg font-semibold mb-4">Recent Accounting Activities</h2>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div className="flex items-center mb-6">
+                  <Calendar className="w-6 h-6 text-green-600 mr-3" />
+                  <h2 className="text-xl font-semibold text-gray-800">Recent Accounting Activities</h2>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4 p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-sm font-medium">Month-end closing completed</div>
+                      <div className="text-sm font-semibold text-gray-800">Month-end closing completed</div>
                       <div className="text-xs text-gray-600">January 2026 - All accounts reconciled</div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                  <div className="flex items-start gap-4 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                    <BarChart3 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-sm font-medium">Journal entries posted</div>
+                      <div className="text-sm font-semibold text-gray-800">Journal entries posted</div>
                       <div className="text-xs text-gray-600">47 entries processed today</div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                  <div className="flex items-start gap-4 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                    <AlertTriangle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-sm font-medium">Bank reconciliation pending</div>
+                      <div className="text-sm font-semibold text-gray-800">Bank reconciliation pending</div>
                       <div className="text-xs text-gray-600">3 accounts require attention</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-              <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button onClick={() => openModal('journal')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2 text-gray-600"><BarChart3 size={32} /></div>
-                  <div className="text-sm font-medium">New Journal Entry</div>
+
+            {/* Quick Actions */}
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+              <div className="flex items-center mb-6">
+                <Users className="w-6 h-6 text-purple-600 mr-3" />
+                <h2 className="text-xl font-semibold text-gray-800">Quick Actions</h2>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <button onClick={() => openModal('journal')} className="group p-6 border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 text-center">
+                  <div className="text-3xl mb-3 text-gray-600 group-hover:text-blue-600 transition-colors">
+                    <BarChart3 size={40} />
+                  </div>
+                  <div className="text-sm font-semibold text-gray-700 group-hover:text-blue-700">New Journal Entry</div>
+                  <div className="text-xs text-gray-500 mt-1">Record transactions</div>
                 </button>
-                <button onClick={() => openModal('payment')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2 text-gray-600"><DollarSign size={32} /></div>
-                  <div className="text-sm font-medium">Process Payment</div>
+                <button onClick={() => openModal('payment')} className="group p-6 border-2 border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-all duration-200 text-center">
+                  <div className="text-3xl mb-3 text-gray-600 group-hover:text-green-600 transition-colors">
+                    <DollarSign size={40} />
+                  </div>
+                  <div className="text-sm font-semibold text-gray-700 group-hover:text-green-700">Process Payment</div>
+                  <div className="text-xs text-gray-500 mt-1">Vendor payments</div>
                 </button>
-                <button onClick={() => openModal('reconcile')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2 text-gray-600"><CheckCircle size={32} /></div>
-                  <div className="text-sm font-medium">Bank Reconciliation</div>
+                <button onClick={() => openModal('reconcile')} className="group p-6 border-2 border-gray-200 rounded-xl hover:border-yellow-300 hover:bg-yellow-50 transition-all duration-200 text-center">
+                  <div className="text-3xl mb-3 text-gray-600 group-hover:text-yellow-600 transition-colors">
+                    <CheckCircle size={40} />
+                  </div>
+                  <div className="text-sm font-semibold text-gray-700 group-hover:text-yellow-700">Bank Reconciliation</div>
+                  <div className="text-xs text-gray-500 mt-1">Match transactions</div>
                 </button>
-                <button onClick={() => openModal('report')} className="p-4 border border-border-color rounded-lg hover:bg-accent-gold hover:border-accent-gold hover:text-primary-navy text-center transition-colors">
-                  <div className="text-2xl mb-2 text-gray-600"><FileText size={32} /></div>
-                  <div className="text-sm font-medium">Generate Report</div>
+                <button onClick={() => openModal('report')} className="group p-6 border-2 border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-all duration-200 text-center">
+                  <div className="text-3xl mb-3 text-gray-600 group-hover:text-purple-600 transition-colors">
+                    <FileText size={40} />
+                  </div>
+                  <div className="text-sm font-semibold text-gray-700 group-hover:text-purple-700">Generate Report</div>
+                  <div className="text-xs text-gray-500 mt-1">Financial statements</div>
                 </button>
               </div>
             </div>

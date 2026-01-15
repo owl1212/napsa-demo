@@ -377,7 +377,7 @@ const BondManagement: React.FC = () => {
               Maturity Schedule
             </button>
           
-            <button
+            {/* <button
               onClick={() => setActiveTab('trading')}
               className={`px-6 py-3 text-sm font-medium ${
                 activeTab === 'trading'
@@ -386,7 +386,7 @@ const BondManagement: React.FC = () => {
               }`}
             >
               Trading
-            </button>
+            </button> */}
             <button
               onClick={() => setActiveTab('coupons')}
               className={`px-6 py-3 text-sm font-medium ${
@@ -749,7 +749,7 @@ const BondManagement: React.FC = () => {
             </div>
           )}
 
-          {activeTab === 'trading' && (
+          {/* {activeTab === 'trading' && (
             <div>
               <h2 className="text-xl font-semibold mb-4">Bond Trading</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -840,7 +840,7 @@ const BondManagement: React.FC = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
 

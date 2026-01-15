@@ -23,12 +23,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
       { id: 'financial_reports', label: 'Financial Reports', icon: 'fa-file-alt', section: 'OPERATIONS' },
       { id: 'fund_mgmt', label: 'Fund Management', icon: 'fa-chart-pie', section: 'OPERATIONS' },
       { id: 'stakeholder_mgmt', label: 'Stakeholder Management', icon: 'fa-users', section: 'OPERATIONS' },
-      { id: 'investment_portfolio', label: 'Investment Portfolio Command Center', icon: 'fa-chart-line', section: 'INVESTMENTS' },
+      { id: 'investment_portfolio', label: 'Investment Portfolio Reports', icon: 'fa-chart-line', section: 'INVESTMENTS' },
       { id: 'equity_book', label: 'Equity Book Dashboard', icon: 'fa-chart-bar', section: 'INVESTMENTS' },
       { id: 'fixed_income', label: 'Fixed Income Dashboard', icon: 'fa-coins', section: 'INVESTMENTS' },
       { id: 'equity_management', label: 'Equity Management', icon: 'fa-chart-line', section: 'INVESTMENTS' },
       { id: 'bond_management', label: 'Bond Management', icon: 'fa-coins', section: 'INVESTMENTS' },
-      { id: 'real_estate_alt', label: 'Real Estate Alternatives', icon: 'fa-city', section: 'INVESTMENTS' },
+      // { id: 'real_estate_alt', label: 'Real Estate Alternatives', icon: 'fa-city', section: 'INVESTMENTS' },
       { id: 'pension_payroll', label: 'Pension Payroll', icon: 'fa-money-check-dollar', section: 'OPERATIONS' },
       { id: 'member_admin', label: 'Member Admin', icon: 'fa-users-gear', section: 'OPERATIONS' },
       { id: 'contribution_mgmt', label: 'Contribution Mgmt', icon: 'fa-hand-holding-dollar', section: 'OPERATIONS' },
@@ -50,7 +50,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ currentView, setView, userR
 
     switch (role) {
       case 'ADMIN':
-        return allItems; // Admin sees everything
+        return allItems; // Admin sees everything.
       case 'REAL_ESTATE':
         return allItems.filter(item => item.id === 'admin_dashboard' || item.id === 'real_estate' || item.id === 'property_management' || item.id === 'lease_management' || item.id === 'maintenance');
       case 'ACTUARIAL':
